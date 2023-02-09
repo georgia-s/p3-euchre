@@ -88,6 +88,48 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 /////////////// Write your implementation for Card below ///////////////
 
 
+  //EFFECTS Returns true if card is the Jack of the trump suit
+bool Card::is_right_bower(Suit trump) const {
+  If ((get_suit() == trump) && (get_rank() == 9)){
+    Const bool is_right_bower = true;
+    Return is_right_bower;
+  } 
+  else {
+    Const bool is_right_bower = false;
+    Return is_right_bower;
+  }
+ }
+
+
+
+//EFFECTS Returns true if card is the Jack of the next suit
+bool Card::is_left_bower(Suit trump) const { 
+  bool done = abs(get_suit() - trump) == 2;
+  If (done && (get_rank() == 9)){
+    const bool is_left_bower = true;
+    return is_right_bower;
+  } 
+  else {
+    const bool is_right_bower = false;
+    return is_right_bower;
+  }
+}
+
+//EFFECTS Returns true if the card is a trump card.  All
+// cards of the trump suit are trump cards.  The left bower
+// is also a trump card.
+bool Card::is_trump(Suit trump) const {
+  if (get_suit() == trump || is_left_bower(trump) == true){
+    is_trump = true;
+    return is_trump;
+  }
+  else{
+    const bool is_trump = false;
+    return is_trump;
+  }
+}
+
+
 // NOTE: We HIGHLY recommend you check out the operator overloading
 // tutorial in the project spec before implementing
 // the following operator overload functions:
