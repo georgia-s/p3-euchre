@@ -15,4 +15,20 @@ TEST(test_card_ctor) {
 
 // Add more test cases here
 
+TEST(test_card_is_right_bower) {
+    Card c(ACE, HEARTS);
+    ASSERT_EQUAL(ACE, c.get_rank());
+    ASSERT_EQUAL(HEARTS, c.get_suit());
+}
+TEST(test_card_is_left_bower) {
+    Card c(ACE, HEARTS);
+    ASSERT_EQUAL(ACE, c.get_rank());
+    ASSERT_EQUAL(HEARTS, c.get_suit());
+}
+TEST(test_card_is_trump) {
+    Card c(ACE, HEARTS);
+    ASSERT_EQUAL(ACE, c.get_rank());
+    ASSERT_EQUAL(HEARTS, c.get_suit());
+}
+
 TEST_MAIN()

@@ -87,25 +87,50 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 
 /////////////// Write your implementation for Card below ///////////////
 
+//EFFECTS Initializes Card to the Two of Spades
+ // Card() {
+
+  //this->rank = 0;
+	//suit =0;
+
+  //}
+
+  //EFFECTS Initializes Card to specified rank and suit
+  //Card(Rank rank_in, Suit suit_in);
+
+  //EFFECTS Returns the rank
+  //Rank get_rank() const {
+    //return rank; 
+  //}
+
+  //EFFECTS Returns the suit.  Does not consider trump.
+  //Suit get_suit() const {
+  //  return suit; 
+  //}
+
+  //EFFECTS Returns the suit
+  //HINT: the left bower is the trump suit!
+  //Suit get_suit(Suit trump) const;
+
+  //EFFECTS Returns true if card is a face card (Jack, Queen, King or Ace)
+  //bool is_face_or_ace() const;
 
   //EFFECTS Returns true if card is the Jack of the trump suit
 bool Card::is_right_bower(Suit trump) const {
-  If ((get_suit() == trump) && (get_rank() == 9)){
-    Const bool is_right_bower = true;
-    Return is_right_bower;
+  if ((get_suit() == trump) && (get_rank() == 9)) {
+    const bool is_right_bower = true;
+    return is_right_bower;
   } 
   else {
-    Const bool is_right_bower = false;
-    Return is_right_bower;
+    const bool is_right_bower = false;
+    return is_right_bower;
   }
  }
-
-
 
 //EFFECTS Returns true if card is the Jack of the next suit
 bool Card::is_left_bower(Suit trump) const { 
   bool done = abs(get_suit() - trump) == 2;
-  If (done && (get_rank() == 9)){
+  if (done && (get_rank() == 9)) {
     const bool is_left_bower = true;
     return is_right_bower;
   } 
@@ -120,7 +145,7 @@ bool Card::is_left_bower(Suit trump) const {
 // is also a trump card.
 bool Card::is_trump(Suit trump) const {
   if (get_suit() == trump || is_left_bower(trump) == true){
-    is_trump = true;
+    //is_trump = true;
     return is_trump;
   }
   else{
