@@ -44,8 +44,9 @@ std::ostream & operator<<(std::ostream &os, Rank rank) {
 //EFFECTS Reads a Rank from a stream, for example "Two" -> TWO
 std::istream & operator>>(std::istream &is, Rank &rank) {
   string str;
-  is >> str;
-  rank = string_to_rank(str);
+  if(is >> str) {
+    rank = string_to_rank(str);
+  }
   return is;
 }
 
@@ -79,41 +80,65 @@ std::ostream & operator<<(std::ostream &os, Suit suit) {
 //EFFECTS Reads a Suit from a stream, for example "Spades" -> SPADES
 std::istream & operator>>(std::istream &is, Suit &suit) {
   string str;
-  is >> str;
-  suit = string_to_suit(str);
+  if (is >> str) {
+    suit = string_to_suit(str);
+  }
   return is;
 }
-
 
 /////////////// Write your implementation for Card below ///////////////
 
 //EFFECTS Initializes Card to the Two of Spades
- // Card() {
+  Card() {
+  Rank = TWO;
+  Suit = 0; 
 
-  //this->rank = 0;
-	//suit =0;
-
-  //}
+  }
 
   //EFFECTS Initializes Card to specified rank and suit
-  //Card(Rank rank_in, Suit suit_in);
+  Card(Rank rank_in, Suit suit_in){
+  TWO     = 0,
+  THREE   = 1,
+  FOUR    = 2,
+  FIVE    = 3,
+  SIX     = 4,
+  SEVEN   = 5,
+  EIGHT   = 6,
+  NINE    = 7,
+  TEN     = 8,
+  JACK    = 9,
+  QUEEN   = 10,
+  KING    = 11,
+  ACE     = 12,
+  }
 
   //EFFECTS Returns the rank
-  //Rank get_rank() const {
-    //return rank; 
-  //}
+  Rank get_rank() const {
+    return rank; 
+  }
 
   //EFFECTS Returns the suit.  Does not consider trump.
-  //Suit get_suit() const {
-  //  return suit; 
-  //}
+  Suit get_suit() const {
+    return Suit; 
+  }
 
-  //EFFECTS Returns the suit
+///EFFECTS Returns the suit
   //HINT: the left bower is the trump suit!
-  //Suit get_suit(Suit trump) const;
+  Suit get_suit(Suit trump) const {
+    if (is_left_bower(Suit trump) == true) {
+      return Suit; 
+    }
+  }
 
   //EFFECTS Returns true if card is a face card (Jack, Queen, King or Ace)
-  //bool is_face_or_ace() const;
+  bool is_face_or_ace() const {
+    if (Rank > 8) {
+      return true;
+    }
+    else {
+      return false; 
+    }
+  }
 
   //EFFECTS Returns true if card is the Jack of the trump suit
 bool Card::is_right_bower(Suit trump) const {
@@ -145,10 +170,10 @@ bool Card::is_left_bower(Suit trump) const {
 // is also a trump card.
 bool Card::is_trump(Suit trump) const {
   if (get_suit() == trump || is_left_bower(trump) == true){
-    //is_trump = true;
-    return is_trump;
+      const bool is_trump = true;
+      return is_trump;
   }
-  else{
+  else {
     const bool is_trump = false;
     return is_trump;
   }
