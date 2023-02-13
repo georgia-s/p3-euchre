@@ -54,7 +54,7 @@ Pack::Pack(std::istream& pack_input) {
     string discard;
     int i = 0;
     while (pack_input >> rank >> discard >> suit) {
-        cards.at(i) = Card(rank, suit);
+        cards.at(i);
         i++;
     }
     next = 0;

@@ -15,5 +15,7 @@ TEST(test_pack_default_ctor) {
 }
 
 // Add more tests here
-
+TEST(test_pack_shuffle) {
+    Pack pack; 
+}
 TEST_MAIN()
