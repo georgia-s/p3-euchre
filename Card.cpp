@@ -178,7 +178,15 @@ bool Card::is_trump(Suit trump) const {
     return is_trump;
   }
 }
+//EFFECTS Prints Card to stream, for example "Two of Spades"
+std::ostream & operator<<(std::ostream &os, const Card &card) {
+Card suit_in = get_suit(); 
+Card rank_in = get_rank(); 
+Card(Rank rank_in, Suit suit_in);
+os << Card(Rank rank_in, Suit suit_in);
+  return os;
 
+}
 
 // NOTE: We HIGHLY recommend you check out the operator overloading
 // tutorial in the project spec before implementing
