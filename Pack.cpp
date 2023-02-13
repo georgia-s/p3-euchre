@@ -1,7 +1,9 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 //  Pack.cpp
 //  p3-euchre
-
+//
+//  Created by Anastasia Kazanas on 2/12/23.
+//
 
 #include "Card.h"
 #include "Pack.h"
@@ -49,16 +51,12 @@ Pack::Pack() {
 // MODIFIES: pack_input
 // EFFECTS: Initializes Pack by reading from pack_input.
 Pack::Pack(std::istream& pack_input) {
-    string rank;
-    string suit;
-    string discard;
-    int i = 0;
-    while (pack_input >> rank >> discard >> suit) {
-        cards.at(i);
-        i++;
+    while (!pack_input.eof()) {
+        std::string s;
+        //pack_input >> rank >> s >> suit;
     }
-    next = 0;
 }
+   
 
 // REQUIRES: cards remain in the Pack
 // EFFECTS: Returns the next card in the pack and increments the next index
