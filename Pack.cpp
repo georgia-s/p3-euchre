@@ -4,9 +4,8 @@
 //
 //  Created by Anastasia Kazanas on 2/12/23.
 //
-
-#include "Card.h"
 #include "Pack.h"
+#include "Card.h"
 #include <array>
 #include <string>
 
@@ -46,15 +45,19 @@ Pack::Pack() {
     next = 0;
 }
 
-// REQUIRES: pack_input contains a representation of a Pack in the
-//           format required by the project specification
+// REQUIRES: pack_input contains a representation of a
+//Pack in the format required by the project specification
 // MODIFIES: pack_input
 // EFFECTS: Initializes Pack by reading from pack_input.
 Pack::Pack(std::istream& pack_input) {
-    while (!pack_input.eof()) {
-        std::string s;
-        //pack_input >> rank >> s >> suit;
+    for (int i = 0; i < PACK_SIZE; i++) {
+        std::string discard;
+        Rank rank;
+        Suit suit;
+        pack_input >> rank >> discard >> suit;
+        cards.at(i) = Card(rank, suit);
     }
+    next = 0;
 }
    
 
@@ -63,7 +66,7 @@ Pack::Pack(std::istream& pack_input) {
 Card Pack::deal_one() {
     int i = next;
     ++next;
-    return cards[i];
+    return cards.at(i);
 }
 
 // EFFECTS: Resets next index to first card in the Pack
@@ -75,19 +78,21 @@ void Pack::reset() {
 //          performs an in shuffle seven times. See
 //          https://en.wikipedia.org/wiki/In_shuffle.
 void Pack::shuffle() {
+    int shuffleTimes = 7;
+    int halfDeck = PACK_SIZE / 2;
     std::array<Card, PACK_SIZE> cards2;
-    for (int i = 0; i < 7; ++i) {
-        for (int firstHalf = 0; firstHalf < 12; ++firstHalf) {
-            cards2[firstHalf] = cards[firstHalf];
+    for (int i = 0; i < shuffleTimes; ++i) {
+        for (int shuffleOne = 0; shuffleOne < halfDeck; ++shuffleOne) {
+            cards2[shuffleOne] = cards[shuffleOne];
         }
-        for (int secondHalf = 12; secondHalf < PACK_SIZE; ++secondHalf) {
-            cards2[secondHalf] = cards[secondHalf];
+        for (int shuffleTwo = halfDeck; shuffleTwo < PACK_SIZE; ++shuffleTwo) {
+            cards2[shuffleTwo] = cards[shuffleTwo];
         }
-        for (int s = 0; s < 12; ++s) {
-            cards[(2 * s) + 1] = cards2[s];
+        for (int i = 0; i < halfDeck; ++i) {
+            cards[(2 * i) + 1] = cards2[i];
         }
-        for (int b = 12; b < PACK_SIZE; ++b) {
-            cards[(2 * (b - 12))] = cards2[b];
+        for (int j = halfDeck; j < PACK_SIZE; ++j) {
+            cards[(2 * (j - halfDeck))] = cards2[j];
         }
     }
 }
