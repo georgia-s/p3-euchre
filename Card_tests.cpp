@@ -105,40 +105,40 @@ TEST(test_getting_card) {
 }
 //TEST string to suit
 //String to suit Normal
-TEST(test_string_to_suit) {
+TEST(test_string_to_suit_one) {
     std::string string = "Hearts";
     Suit suit = string_to_suit(string);
     ASSERT_EQUAL(suit, HEARTS);
 }
 //String to suit EDGE
-TEST(test_string_to_suit2) {
+TEST(test_string_to_suit_two) {
     std::string string = "Spades";
     Suit suit = string_to_suit(string);
     ASSERT_EQUAL(suit, SPADES);
 }
 
 //String to suit EDGE
-TEST(test_string_to_suit2) {
+TEST(test_string_to_suit_three) {
     std::string string = "Diamonds";
     Suit suit = string_to_suit(string);
     ASSERT_EQUAL(suit, DIAMONDS);
 }
 //TEST string to rank
 //String to rank NORMAL
-TEST(test_string_to_rank) {
+TEST(test_string_to_rank_one) {
     std::string string = "Five";
     Rank rank = string_to_rank(string);
     ASSERT_EQUAL(rank, FIVE);
 }
 
 //String to rank EDGE
-TEST(test_string_to_rank2) {
+TEST(test_string_to_rank_two) {
     std::string string = "Two";
     Rank rank = string_to_rank(string);
     ASSERT_EQUAL(rank, TWO);
 }
 //String to rank EDGE
-TEST(test_string_to_rank3) {
+TEST(test_string_to_rank_three) {
     std::string string = "Ace";
     Rank rank = string_to_rank(string);
     ASSERT_EQUAL(rank, ACE);
