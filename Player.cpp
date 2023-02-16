@@ -37,20 +37,47 @@ public:
             std::cout << "Human player " << simple_name << "'s hand: "
                  << "[" << i << "] " << simple_hand[i] << "\n";
         }
-        std::cout << "Human player " << simple_name
-                  << ", please enter a suit, or \"pass\":\n";
+       
+        Suit trump_suit = upcard.get_suit();
+        Suit other_color = Suit_next(trump_suit);
+    
+        int ace_or_face_same_as_trump_count = 0;
         
-        std::string decision;
-        std::cin >> decision;
-        
-        if (decision != "pass") {
-            order_up_suit = string_to_suit(decision);
-            return true;
+        if (round == 1) {
+            for (size_t i=0; i < simple_hand.size(); ++i) {
+                if (simple_hand[i].get_suit() == trump_suit && simple_hand[i].is_face_or_ace()) {
+                    ace_or_face_same_as_trump_count++;
+                }
+            }
+                    
+            if (ace_or_face_same_as_trump_count >= 2) {
+                order_up_suit = trump_suit;
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        else {
-            return false;
+        if (round == 2) {
+            for (size_t i=0; i < simple_hand.size(); ++i) {
+                if (simple_hand[i].get_suit() == trump_suit || simple_hand[i].get_suit() == other_color) {
+                    if (simple_hand[i].is_face_or_ace()) {
+                        ace_or_face_same_as_trump_count++;
+                    }
+                }
+            }
+            if (ace_or_face_same_as_trump_count >= 1) {
+                order_up_suit = trump_suit;
+                return true;
+            }
+            else {
+                return false;
+            }
+            
         }
+        return false;
     }
+    
     void add_and_discard(const Card &upcard) {
         Suit trump = upcard.get_suit();
         int lowest = 0;
@@ -132,7 +159,6 @@ public:
                 simple_hand.erase(simple_hand.begin() + i);
             }
         }
-        
         return max;
     }
 
