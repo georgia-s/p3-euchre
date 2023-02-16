@@ -12,8 +12,7 @@ TEST(test_card_ctor) {
     ASSERT_EQUAL(HEARTS, c.get_suit());
 }
 
-// Add more test cases here
-
+//TEST suit_next 
 TEST(test_suit_next) {
     Suit suit = Suit_next(HEARTS);
     ASSERT_EQUAL(suit, DIAMONDS);
@@ -27,7 +26,6 @@ TEST(test_suit_next3) {
     ASSERT_EQUAL(suit, HEARTS);
 }
 //TEST card initialization 
-
 TEST(test_card_initilized_default) {
     Card card;
     ASSERT_EQUAL(card.get_rank(), TWO);
@@ -49,7 +47,7 @@ TEST(test_card_initilized_specific_two) {
     Suit trump = DIAMONDS;
     ASSERT_EQUAL(card.get_suit(trump), HEARTS);
 }
-
+//TEST card_type
 TEST(test_card_type_one) {
     Card three_spades = Card(FIVE, SPADES);
     ASSERT_FALSE(three_spades.is_face_or_ace());
@@ -97,7 +95,7 @@ TEST(test_card_comparisons_three) {
     ASSERT_TRUE(five_spades != five_hearts);
 
 }
-
+//TEST getting_card
 TEST(test_getting_card) {
     std::string three_of_spades = "Three of Spades";
     Card three_spades = Card(THREE, SPADES);
@@ -105,6 +103,7 @@ TEST(test_getting_card) {
     oss << three_spades;
     ASSERT_EQUAL(oss.str(), three_of_spades);
 }
+//TEST string to suit
 //String to suit Normal
 TEST(test_string_to_suit) {
     std::string string = "Hearts";
@@ -124,6 +123,7 @@ TEST(test_string_to_suit2) {
     Suit suit = string_to_suit(string);
     ASSERT_EQUAL(suit, DIAMONDS);
 }
+//TEST string to rank
 //String to rank NORMAL
 TEST(test_string_to_rank) {
     std::string string = "Five";
