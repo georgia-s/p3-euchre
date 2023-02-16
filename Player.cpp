@@ -35,14 +35,11 @@ public:
                             int round, Suit &order_up_suit) const{
         for (size_t i=0; i < simple_hand.size(); ++i) {
             std::cout << "Human player " << simple_name << "'s hand: "
-                 << "[" << i << "] " << simple_hand[i] << "\n";
+                << "[" << i << "] " << simple_hand[i] << "\n";
         }
-       
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
-    
         int ace_or_face_same_as_trump_count = 0;
-        
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
@@ -59,13 +56,13 @@ public:
                 return false;
             }
         }
+
         if (round == 2) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
-                if (simple_hand[i].get_suit() == trump_suit
-                    || simple_hand[i].get_suit() == other_color) {
-                    if (simple_hand[i].is_face_or_ace()) {
+                if ((simple_hand[i].get_suit() == trump_suit
+                    || simple_hand[i].get_suit() == other_color)
+                    && (simple_hand[i].is_face_or_ace()) ) {
                         ace_or_face_same_as_trump_count++;
-                    }
                 }
             }
             if (ace_or_face_same_as_trump_count >= 1) {
