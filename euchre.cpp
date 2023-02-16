@@ -4,8 +4,7 @@ using namespace std;
 
 //We recommend writing a Game ADT.
 
-//It should have a constructor that takes in details like the players,
-//points to win, etc. and a public play() function.
+
 //The Game and its helper functions do the hard work,
 //and the main() function is simple.
 
@@ -25,12 +24,31 @@ class Game {
   //void deal(/* ... */);
   //void make_trump(/* ... */);
   //void play_hand(/* ... */);
+  //Name strings 
+  
+//EFFECTS Reads a Suit from a stream, for example "Spades" -> SPADES
+std::istream & operator>>(std::istream &is) {
+  string name1;
+  string name2; 
+  string name3;
+  string name4; 
+  string name1_type;
+  string name2_type;
+  string name3_type;
+  string name4_type;
+  string pack;
+  string shuffle; 
+  string points_to_win;
+  while (is) {}
+  is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >> name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type; 
+
+  }
 
 };
-
+//It should have a constructor that takes in details like the players,
+//points to win, etc. and a public play() function.
+//DEFAULT CONSTRUCTOR 
 Game::Game() {
-   // rank = TWO;
-    //suit = SPADES;
 }
 //NON DEFAULT CONSTRUCTOR 
 //Game::Game() {
@@ -38,11 +56,13 @@ Game::Game() {
     
 //}
 
-//To compile and run a Euchre game with four players.
+
+int main() {
+    //To compile and run a Euchre game with four players.
     //make euchre.exe
     // ./euchre.exe pack.in noshuffle 1 Adi Simple
-// Barbara Simple Chi-Chih Simple Dabbala Simple
-int main() {
+    // Barbara Simple Chi-Chih Simple Dabbala Simple
+    //get stream 
     // Assume pack_filename is a variable
     //containing the specified pack filename from argv
 //cout << "Error opening " << ///pack_filename << endl;
