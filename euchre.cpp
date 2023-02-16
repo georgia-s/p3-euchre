@@ -1,5 +1,8 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 #include <iostream>
+#include <array>
+#include <string>
+#include "Player.h"
 using namespace std;
 
 //We recommend writing a Game ADT.
@@ -13,6 +16,15 @@ class Game {
  //constructer
   Game(/* game details */);
   //void play();
+    void error_Message() {
+    //if stream is bad or something 
+  cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+  }
+
+  
+
    private:
   //std::vector<Player*> players;
 //Pack pack;
@@ -40,9 +52,10 @@ std::istream & operator>>(std::istream &is) {
   string shuffle; 
   string points_to_win;
   while (is) {}
-  is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >> name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type; 
-
+  is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >>
+   name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type; 
   }
+
 
 };
 //It should have a constructor that takes in details like the players,
@@ -66,9 +79,7 @@ int main() {
     // Assume pack_filename is a variable
     //containing the specified pack filename from argv
 //cout << "Error opening " << ///pack_filename << endl;
-  cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
-     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
-     << "NAME4 TYPE4" << endl;
+
      //Check if human name or simple name to decide which function to call
 
 //At the beginning of each hand, announce the hand,
