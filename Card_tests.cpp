@@ -101,11 +101,24 @@ TEST(test_getting_card) {
     oss << three_spades;
     ASSERT_EQUAL(oss.str(), three_of_spades);
 }
-
+//String to suit Normal
 TEST(test_string_to_suit) {
     std::string string = "Hearts";
     Suit suit = string_to_suit(string);
     ASSERT_EQUAL(suit, HEARTS);
+}
+//String to suit EDGE
+TEST(test_string_to_suit2) {
+    std::string string = "Spades";
+    Suit suit = string_to_suit(string);
+    ASSERT_EQUAL(suit, SPADES);
+}
+
+//String to suit EDGE
+TEST(test_string_to_suit2) {
+    std::string string = "Diamonds";
+    Suit suit = string_to_suit(string);
+    ASSERT_EQUAL(suit, DIAMONDS);
 }
 //String to rank NORMAL
 TEST(test_string_to_rank) {
