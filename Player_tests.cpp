@@ -22,4 +22,81 @@ TEST(test_add_card) {
 
 
 
+
+// starts with trump card
+TEST(test_simple_player_make_trump) {
+  // Bob's hand
+  Player * bob = Player_factory("Bob", "Simple");
+  bob->add_card(Card(KING, HEARTS));
+  bob->add_card(Card(TEN, SPADES));
+  bob->add_card(Card(TEN, CLUBS));
+  bob->add_card(Card(NINE, SPADES));
+  bob->add_card(Card(THREE, DIAMONDS));
+
+  // Bob makes trump
+  Card nine_spades(NINE, SPADES);
+  Suit trump = HEARTS;
+  bool orderup = bob->make_trump(
+    nine_spades,    // Upcard
+    true,           // Bob is also the dealer
+    1,              // First round
+    trump           // Suit ordered up (if any)
+  );
+
+  // Verify Bob's order up and trump suit
+  ASSERT_TRUE(orderup);
+  ASSERT_EQUAL(trump, SPADES);
+
+  delete bob;
+}
+
+// all are trump cards
+TEST(test_simple_player_make_trump_two) {
+  // Bob's hand
+  Player * bob = Player_factory("Bob", "Simple");
+  bob->add_card(Card(FOUR, SPADES));
+  bob->add_card(Card(TEN, SPADES));
+  bob->add_card(Card(KING, SPADES));
+  bob->add_card(Card(NINE, SPADES));
+  bob->add_card(Card(THREE, SPADES));
+
+  // Bob makes trump
+  Card king_diamonds(KING, DIAMONDS);
+    Suit trump = SPADES;
+  bool orderup = bob->make_trump(
+    king_diamonds,    // Upcard
+    true,           // Bob is also the dealer
+    1,              // First round
+    trump           // Suit ordered up (if any)
+  );
+
+  // Verify Bob's order up and trump suit
+  ASSERT_TRUE(orderup);
+  ASSERT_EQUAL(trump, SPADES);
+
+  delete bob;
+}
+
+TEST(test_simple_player_lead_card) {
+  // Bob's hand
+  Player * bob = Player_factory("Bob", "Simple");
+  bob->add_card(Card(NINE, SPADES));
+  bob->add_card(Card(TEN, SPADES));
+  bob->add_card(Card(QUEEN, SPADES));
+  bob->add_card(Card(KING, SPADES));
+  bob->add_card(Card(ACE, SPADES));
+
+  // Bob adds a card to his hand and discards one card
+  bob->add_and_discard(Card(NINE, HEARTS));
+
+  // Bob leads
+  Card card_led = bob->lead_card(HEARTS);
+
+  // Verify the card Bob selected to lead
+  Card ace_spades(ACE, SPADES);
+  ASSERT_EQUAL(card_led, ace_spades); //check led card
+
+  delete bob;
+}
+
 TEST_MAIN()
