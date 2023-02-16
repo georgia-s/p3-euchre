@@ -13,40 +13,29 @@ TEST(test_player_get_name) {
     delete alice;
 }
 
-TEST(test_add_card) {
-    Card card(NINE, SPADES);
-    Card add_card(card);
-    
+//TEST(test_add_card) {
+    //Card card(NINE, SPADES);
+   // Card add_card(card);
+//}
 
-}
-
-
-
-
-// starts with trump card
-TEST(test_simple_player_make_trump) {
+TEST(test_simple_player_play_card) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
-  bob->add_card(Card(KING, HEARTS));
-  bob->add_card(Card(TEN, SPADES));
-  bob->add_card(Card(TEN, CLUBS));
   bob->add_card(Card(NINE, SPADES));
-  bob->add_card(Card(THREE, DIAMONDS));
+  bob->add_card(Card(TEN, DIAMONDS));
+  bob->add_card(Card(QUEEN, HEARTS));
+  bob->add_card(Card(KING, HEARTS));
+  bob->add_card(Card(ACE, CLUBS));
 
-  // Bob makes trump
-  Card nine_spades(NINE, SPADES);
-  Suit trump = HEARTS;
-  bool orderup = bob->make_trump(
-    nine_spades,    // Upcard
-    true,           // Bob is also the dealer
-    1,              // First round
-    trump           // Suit ordered up (if any)
-  );
+  // Bob plays a card
+  Card nine_diamonds(NINE, DIAMONDS);
+  Card card_played = bob->play_card(
+    nine_diamonds,  // Nine of Diamonds is led
+    HEARTS    // Trump suit
+  ); 
 
-  // Verify Bob's order up and trump suit
-  ASSERT_TRUE(orderup);
-  ASSERT_EQUAL(trump, SPADES);
-
+  // Verify the card Bob played
+  ASSERT_EQUAL(card_played, Card(NINE, SPADES));
   delete bob;
 }
 

@@ -18,10 +18,11 @@ TEST(test_suit_next) {
     Suit suit = Suit_next(HEARTS);
     ASSERT_EQUAL(suit, DIAMONDS);
 }
-TEST(test_suit_next) {
+TEST(test_suit_next2) {
     Suit suit = Suit_next(SPADES);
     ASSERT_EQUAL(suit, CLUBS);
 }
+//TEST card initialization 
 
 TEST(test_card_initilized_default) {
     Card card;
@@ -50,6 +51,7 @@ TEST(test_card_type_two) {
     ASSERT_TRUE(Jack_spades.is_left_bower(CLUBS));
     ASSERT_TRUE(Jack_spades.is_trump(SPADES));
 }
+//TEST card comparisons 
 
 TEST(test_card_comparisons_one) {
     Card three_spades = Card(THREE, SPADES);
@@ -103,13 +105,13 @@ TEST(test_string_to_rank) {
 }
 
 //String to rank EDGE
-TEST(test_string_to_rank) {
+TEST(test_string_to_rank2) {
     std::string string = "Two";
     Rank rank = string_to_rank(string);
     ASSERT_EQUAL(rank, TWO);
 }
 //String to rank EDGE
-TEST(test_string_to_rank) {
+TEST(test_string_to_rank3) {
     std::string string = "Ace";
     Rank rank = string_to_rank(string);
     ASSERT_EQUAL(rank, ACE);
