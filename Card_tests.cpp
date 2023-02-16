@@ -30,10 +30,20 @@ TEST(test_card_initilized_default) {
     ASSERT_EQUAL(card.get_suit(), SPADES);
 }
 
-TEST(test_card_initilized_specific) {
-    Card card = {FOUR, HEARTS};
-    ASSERT_EQUAL(card.get_rank(), FOUR);
+TEST(test_card_initilized_specific_one) {
+    Card card = {JACK, HEARTS};
+    ASSERT_EQUAL(card.get_rank(), JACK);
     ASSERT_EQUAL(card.get_suit(), HEARTS);
+    Suit trump = DIAMONDS;
+    ASSERT_EQUAL(card.get_suit(trump), DIAMONDS);
+}
+
+TEST(test_card_initilized_specific_two) {
+    Card card = {FIVE, HEARTS};
+    ASSERT_EQUAL(card.get_rank(), FIVE);
+    ASSERT_EQUAL(card.get_suit(), HEARTS);
+    Suit trump = DIAMONDS;
+    ASSERT_EQUAL(card.get_suit(trump), HEARTS);
 }
 
 TEST(test_card_type_one) {
