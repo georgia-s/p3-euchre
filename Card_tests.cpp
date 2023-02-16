@@ -22,6 +22,10 @@ TEST(test_suit_next2) {
     Suit suit = Suit_next(SPADES);
     ASSERT_EQUAL(suit, CLUBS);
 }
+TEST(test_suit_next3) {
+    Suit suit = Suit_next(DIAMONDS);
+    ASSERT_EQUAL(suit, HEARTS);
+}
 //TEST card initialization 
 
 TEST(test_card_initilized_default) {
