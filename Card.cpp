@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <fstream>
 #include <array>
 #include <string>
 #include "Card.h"
@@ -45,11 +46,11 @@ std::ostream & operator<<(std::ostream &os, Rank rank) {
 //EFFECTS Reads a Rank from a stream, for example "Two" -> TWO
 std::istream & operator>>(std::istream &is, Rank &rank) {
   string str;
-  is >> str;
-  rank = string_to_rank(str);
+  if(is >> str) {
+    rank = string_to_rank(str);
+  }
   return is;
 }
-
 
 
 /////////////// Suit operator implementations - DO NOT CHANGE ///////////////
@@ -68,7 +69,7 @@ Suit string_to_suit(const std::string &str) {
       return static_cast<Suit>(s);
     }
   }
-  assert(false); // Input string didn't match any suit
+  assert(false);
 }
 
 //EFFECTS Prints Suit to stream, for example "Spades"
@@ -88,17 +89,6 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 
 /////////////// Write your implementation for Card below ///////////////
 
-
-//REQUIRES str represents a valid suit ("Spades", "Hearts", "Clubs", or "Diamonds")
-Suit string_to_suit(const std::string &str);
-
-//EFFECTS Prints Suit to stream, for example "Spades"
-std::ostream & operator<<(std::ostream &os, Suit suit);
-
-//EFFECTS Reads a Suit from a stream, for example "Spades" -> SPADES
-std::istream & operator>>(std::istream &is, Suit &suit);
-
-
 //EFFECTS Initializes Card to the Two of Spades
 Card::Card() {
     rank = TWO;
@@ -106,7 +96,6 @@ Card::Card() {
 }
 
   //EFFECTS Initializes Card to specified rank and suit
-
 Card::Card(Rank rank_in, Suit suit_in) {
     rank = rank_in;
     suit = suit_in;
@@ -258,7 +247,7 @@ bool operator==(const Card &lhs, const Card &rhs) {
 //EFFECTS Returns true if lhs is not the same card as rhs.
 //  Does not consider trump.
 bool operator!=(const Card &lhs, const Card &rhs) {
-    if (lhs.get_rank() != rhs.get_rank() && lhs.get_suit() != rhs.get_suit()) {
+    if (lhs.get_rank() != rhs.get_rank() || lhs.get_suit() != rhs.get_suit()) {
         return true;
     } else {
         return false;
