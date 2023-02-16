@@ -256,10 +256,8 @@ public:
         }
         if (same_suit){
             for (int i = 0; i < human_hand.size(); i++) {
-                if (human_hand[i].get_suit() == led_card.get_suit()) {
-                    if (human_hand[i] > max) {
+                if ((human_hand[i].get_suit() == led_card.get_suit()) && (human_hand[i] > max)) {
                         human_hand[i] = max;
-                    }
                 }
                 human_hand.erase(human_hand.begin() + i);
             }
