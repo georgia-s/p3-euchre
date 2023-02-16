@@ -45,7 +45,8 @@ public:
         
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
-                if (simple_hand[i].get_suit() == trump_suit && simple_hand[i].is_face_or_ace()) {
+                if (simple_hand[i].get_suit() == trump_suit
+                    && simple_hand[i].is_face_or_ace()) {
                     ace_or_face_same_as_trump_count++;
                 }
             }
@@ -60,7 +61,8 @@ public:
         }
         if (round == 2) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
-                if (simple_hand[i].get_suit() == trump_suit || simple_hand[i].get_suit() == other_color) {
+                if (simple_hand[i].get_suit() == trump_suit
+                    || simple_hand[i].get_suit() == other_color) {
                     if (simple_hand[i].is_face_or_ace()) {
                         ace_or_face_same_as_trump_count++;
                     }
@@ -95,10 +97,10 @@ public:
     
     
     //REQUIRES Player has at least one card
-    //EFFECTS  Leads one Card from Player's hand according to their strategy
-    //  "Lead" means to play the first Card in a trick.  The card
-    //  is removed the player's hand.
-    //need to do
+    //EFFECTS  Leads one Card from Player's hand
+    //according to their strategy
+    //"Lead" means to play the first Card in a trick.
+    //The card is removed the player's hand.
     Card lead_card(Suit trump) {
         Card max;
         int start = 0;
@@ -132,8 +134,9 @@ public:
     }
     
     //REQUIRES Player has at least one card
-    //EFFECTS  Plays one Card from Player's hand according to their strategy.
-    //  The card is removed from the player's hand.
+    //EFFECTS Plays one Card from Player's hand
+    //according to their strategy.
+    //The card is removed from the player's hand.
     Card play_card(const Card &led_card, Suit trump){
         Card max = simple_hand[0];
         bool same_suit = false;
@@ -185,8 +188,10 @@ public:
     }
    
     // need to make specific to human
-    //EFFECTS If Player wishes to order up a trump suit then return true and
-    //change order_up_suit to desired suit.If Player wishes to pass, then do
+    //EFFECTS If Player wishes to order
+    //up a trump suit then return true and
+    //change order_up_suit to desired suit.
+    //If Player wishes to pass, then do
     //not modify order_up_suit and return false.
     bool make_trump(const Card &upcard, bool is_dealer,
                             int round, Suit &order_up_suit) const{
@@ -230,7 +235,8 @@ public:
             std::cout << "Human player " << human_name << "'s hand: "
             << "[" << i << "] " << human_hand[i] << "\n";
         }
-        std::cout << "Human player " << human_name << ", please select a card:\n";
+        std::cout << "Human player " << human_name
+                  << ", please select a card:\n";
         Rank rank;
         std::string junk;
         Suit suit;
@@ -275,7 +281,8 @@ public:
     std::string human_name;
 };
 
-Player * Player_factory(const std::string &name, const std::string &strategy){
+Player * Player_factory(const std::string &name,
+                        const std::string &strategy){
     if(strategy == "Simple"){
         return new SimplePlayer(name);
     }
@@ -286,7 +293,8 @@ Player * Player_factory(const std::string &name, const std::string &strategy){
     return nullptr;
 }
 //EFFECTS: Prints player's name to os
-std::ostream & operator<<(std::ostream &os, const Player &p){
+std::ostream & operator<<(std::ostream &os,
+                          const Player &p){
     os << p.get_name();
     return os;
 }
