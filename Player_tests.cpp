@@ -171,6 +171,33 @@ TEST(test_simple_player_make_trump_five) {
   delete bob;
 }
 
+// round 3 dont take trump
+TEST(test_simple_player_make_trump_six) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(FOUR, DIAMONDS));
+    bob->add_card(Card(QUEEN, DIAMONDS));
+    bob->add_card(Card(KING, SPADES));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(THREE, SPADES));
+    
+    // Bob makes trump
+    Card king_diamonds(KING, DIAMONDS);
+    Suit trump = DIAMONDS;
+    bool orderup = bob->make_trump(
+    king_diamonds,    // Upcard
+    true,           // Bob is also the dealer
+    3,              // FIRST round
+    trump           // Suit ordered up (if any)
+    );
+
+  // Verify Bob's order up and trump suit
+  ASSERT_FALSE(orderup);
+  ASSERT_EQUAL(trump, DIAMONDS);
+
+  delete bob;
+}
+
 TEST(test_simple_player_lead_card) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -192,7 +219,5 @@ TEST(test_simple_player_lead_card) {
 
     delete bob;
 }
-
-
 
 TEST_MAIN()
