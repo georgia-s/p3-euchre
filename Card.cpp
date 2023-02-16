@@ -68,8 +68,7 @@ Suit string_to_suit(const std::string &str) {
     if (str == SUIT_NAMES[s]) {
       return static_cast<Suit>(s);
     }
-  }
-  assert(false);
+  }  assert(false);
 }
 
 //EFFECTS Prints Suit to stream, for example "Spades"
