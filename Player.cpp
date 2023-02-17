@@ -35,15 +35,17 @@ public:
                             int round, Suit &order_up_suit) const{
         for (size_t i=0; i < simple_hand.size(); ++i) {
             std::cout << "Human player " << simple_name << "'s hand: "
-                << "[" << i << "] " << simple_hand[i] << "\n";
+            << "[" << i << "] " << simple_hand[i] << "\n";
         }
+        
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
+        
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
-                    && simple_hand[i].is_face_or_ace()) {
+                && simple_hand[i].is_face_or_ace()) {
                     ace_or_face_same_as_trump_count++;
                 }
             }
@@ -144,7 +146,8 @@ public:
         }
         if (same_suit){
             for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i].get_suit() == led_card.get_suit()) && (simple_hand[i] > max)) {
+                if ((simple_hand[i].get_suit() == led_card.get_suit())
+                    && (simple_hand[i] > max)) {
                         simple_hand[i] = max;
                 }
                 simple_hand.erase(simple_hand.begin() + i);
@@ -253,7 +256,8 @@ public:
         }
         if (same_suit){
             for (int i = 0; i < human_hand.size(); i++) {
-                if ((human_hand[i].get_suit() == led_card.get_suit()) && (human_hand[i] > max)) {
+                if ((human_hand[i].get_suit() == led_card.get_suit())
+                    && (human_hand[i] > max)) {
                         human_hand[i] = max;
                 }
                 human_hand.erase(human_hand.begin() + i);
