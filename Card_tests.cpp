@@ -211,17 +211,69 @@ TEST (test_is_right_or_left_bower) {
     Card jack_diamonds = Card(JACK, DIAMONDS);
     ASSERT_TRUE(jack_diamonds.is_right_bower(DIAMONDS));
     ASSERT_FALSE(jack_diamonds.is_left_bower(DIAMONDS));
+    ASSERT_TRUE(jack_diamonds.is_trump(DIAMONDS));
+    ASSERT_TRUE(jack_diamonds.is_trump(HEARTS));
+    ASSERT_FALSE(jack_diamonds.is_trump(SPADES));
+    
     
     Card jack_hearts = Card(JACK, HEARTS);
     ASSERT_FALSE(jack_hearts.is_right_bower(DIAMONDS));
     ASSERT_TRUE(jack_hearts.is_left_bower(DIAMONDS));
+    ASSERT_TRUE(jack_hearts.is_trump(HEARTS));
+    ASSERT_TRUE(jack_hearts.is_trump(DIAMONDS));
+    ASSERT_FALSE(jack_hearts.is_trump(SPADES));
     
     Card jack_spades = Card(JACK, SPADES);
     ASSERT_TRUE(jack_spades.is_left_bower(CLUBS));
+    ASSERT_TRUE(jack_spades.is_trump(SPADES));
+    ASSERT_TRUE(jack_spades.is_trump(CLUBS));
+    ASSERT_FALSE(jack_spades.is_trump(HEARTS));
     
     Card jack_clubs = Card(JACK, CLUBS);
     ASSERT_TRUE(jack_clubs.is_left_bower(SPADES));
+    ASSERT_TRUE(jack_clubs.is_trump(SPADES));
+    ASSERT_TRUE(jack_clubs.is_trump(CLUBS));
+    ASSERT_FALSE(jack_clubs.is_trump(HEARTS));
 }
 
+TEST(test_card_comparisons_four) {
+    Card five_hearts = Card(FIVE, HEARTS);
+    Card jack_diamonds = Card(JACK, DIAMONDS);
+    ASSERT_FALSE(jack_diamonds < five_hearts);
+    ASSERT_FALSE(five_hearts > jack_diamonds);
+    ASSERT_FALSE(jack_diamonds <= five_hearts);
+    ASSERT_FALSE(five_hearts >= jack_diamonds);
+    ASSERT_FALSE(jack_diamonds == five_hearts);
+    ASSERT_TRUE(five_hearts != jack_diamonds);
+    ASSERT_TRUE(five_hearts < jack_diamonds);
+    ASSERT_TRUE(jack_diamonds > five_hearts);
+    ASSERT_TRUE(five_hearts <= jack_diamonds);
+    ASSERT_TRUE(jack_diamonds >= five_hearts);
+}
+
+TEST(test_card_less_one) {
+    Card three_diamonds = Card(THREE, DIAMONDS);
+    ASSERT_FALSE(Card_less(three_diamonds, three_diamonds, HEARTS));
+    ASSERT_FALSE(Card_less(three_diamonds, three_diamonds, three_diamonds, DIAMONDS));
+}
+
+TEST(test_card_less_two) {
+    Card three_clubs = Card(THREE, CLUBS);
+    Card jack_clubs = Card(JACK, CLUBS);
+    Card ace_clubs = Card(ACE, CLUBS);
+    Card king_clubs = Card(KING, CLUBS);
+    ASSERT_TRUE(Card_less(three_clubs, jack_clubs, CLUBS));
+    ASSERT_TRUE(Card_less(jack_clubs, king_clubs, three_clubs, CLUBS));
+    ASSERT_FALSE(Card_less(king_clubs, jack_clubs, three_clubs, CLUBS));
+}
+
+TEST(test_Card_less_three) {
+    Card queen_spades = Card(QUEEN, SPADES);
+    Card jack_hearts = Card(JACK, HEARTS);
+    Card ace_diamonds = Card(ACE, DIAMONDS);
+    Card king_clubs = Card(KING, CLUBS);
+    ASSERT_FALSE(Card_less(king_clubs, jack_hearts, CLUBS));
+    ASSERT_TRUE(Card_less(king_clubs, jack_hearts, ace_diamonds,HEARTS));
+}
 
 TEST_MAIN()

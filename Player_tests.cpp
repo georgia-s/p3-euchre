@@ -220,4 +220,37 @@ TEST(test_simple_player_lead_card) {
     delete bob;
 }
 
+TEST(test_make_trump){
+    //simple player:
+    Player * Bob = Player_factory("Bob", "Simple");
+    Bob->add_card(Card(QUEEN, SPADES));
+    Bob->add_card(Card(JACK, SPADES));
+    Bob->add_card(Card(JACK, CLUBS));
+    Bob->add_card(Card(TEN, CLUBS));
+    Bob->add_card(Card(ACE, HEARTS));
+    
+    Suit trump;
+    Suit trump2;
+    //no face card of faceup
+    Card nine_hearts(NINE, HEARTS);
+    Card nine_diamonds(NINE, DIAMONDS);
+    ASSERT_FALSE(Bob->make_trump(nine_diamonds, false, 1, trump2));
+    ASSERT_FALSE(Bob->make_trump(nine_diamonds, true, 1, trump2));
+    ASSERT_FALSE(Bob->make_trump(nine_hearts, false, 1, trump2));
+    ASSERT_FALSE(Bob->make_trump(nine_hearts, true, 1, trump2));
+    ASSERT_EQUAL(trump2, CLUBS);
+    
+    //two or more face cards of faceup
+    Card nine_spades(NINE, SPADES);
+    ASSERT_TRUE(Bob->make_trump(nine_spades, false, 1, trump));
+    ASSERT_TRUE(Bob->make_trump(nine_spades, true, 1, trump));
+    ASSERT_EQUAL(trump, SPADES);
+    
+    //one face card of faceup
+    Card nine_clubs(NINE, CLUBS);
+    ASSERT_TRUE(Bob->make_trump(nine_clubs, false, 1, trump2));
+    ASSERT_TRUE(Bob->make_trump(nine_clubs, true, 1, trump2));
+    ASSERT_EQUAL(trump2, CLUBS);
+}
+
 TEST_MAIN()
