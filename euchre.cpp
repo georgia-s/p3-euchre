@@ -76,7 +76,14 @@ using namespace std;
 class Game
 {
 public:
-//GAME IS WON BOOL
+const int MAX_POINTS_TO_WIN= 100;
+const int MIN_POINTS_TO_WIN = 1;
+void Player_init (string name, string name_type) {
+  if (name_type == "Simple") {
+    Player.get_name(); 
+
+}
+//GAME IS WON BOolL
 bool gameWon (Game points_to_win, Game teamOneScore, Game teamTwoScore) {
   if ((teamOneScore == points_to_win) ||(teamTwoScore == points_to_win)){
     return true;
@@ -85,15 +92,8 @@ bool gameWon (Game points_to_win, Game teamOneScore, Game teamTwoScore) {
     return false; 
   }
 }
-//CHECK IF PLAYER IS SIMPLE OR HUMAN 
-bool isHuman(Game string str) {
-  if (str == simple) {
-    return false; 
-  }
-  else {
-    return true; 
-  }
-}
+//CHECK IF PLAYER IS SIMPLE OR HUMAN USING PLAYER FACTORY
+
 
   // constructer
   Game(/* game details */);
@@ -104,6 +104,10 @@ bool isHuman(Game string str) {
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
          << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
          << "NAME4 TYPE4" << endl;
+  }
+  void make_trump() {
+    cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
+string answer;
   }
   //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES 
   int get_score(int team) {
@@ -117,6 +121,14 @@ bool isHuman(Game string str) {
   int get_dealer_posistion(int dealer_posistion) {
     return dealer_posistion; 
   }
+  istream & operator>>(istream &is) {
+
+  while (is) {
+ is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >>
+        name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type;
+  }
+  return is; 
+}
 
 private:
   // std::vector<Player*> players;
@@ -129,9 +141,19 @@ private:
   // void deal(/* ... */);
   // void make_trump(/* ... */);
   // void play_hand(/* ... */);
+    string name1;
+    string name2;
+    string name3;
+    string name4;
+    string name1_type;
+    string name2_type;
+    string name3_type;
+    string name4_type;
+    string pack;
+    string shuffle;
 int teamOneScore = 0;
 int teamTwoScore = 0;
-int pointstowin = 0; 
+string points_to_win = 0; 
 vector<string> players;
 
 //DEAL FUNCTION
@@ -142,24 +164,7 @@ void Deal {
 
 }
 //READS IN USER INPUT
-istream & operator>>(istream &is) {
-   string name1;
-    string name2;
-    string name3;
-    string name4;
-    string name1_type;
-    string name2_type;
-    string name3_type;
-    string name4_type;
-    string pack;
-    string shuffle;
-    string points_to_win;
-  while (is) {
- is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >>
-        name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type;
-  }
-  return is; 
-}
+
 //OUTS INPUT
 ostream & operator<<(ostream &os){
 
@@ -171,6 +176,7 @@ ostream & operator<<(ostream &os){
 // DEFAULT CONSTRUCTOR
 Game::Game()
 {
+  pointstowin = 0; 
 }
 // NON DEFAULT CONSTRUCTOR
 // Game::Game() {
@@ -179,6 +185,13 @@ Game::Game()
 }; 
 
 int main() {
+
+  
+  Player_factory(name1,name1_type); 
+  Player_factory(name2,name2_type); 
+  Player_factory(name3,name3_type); 
+  Player_factory(name4,name4_type); 
+  }
 /*
 STEP 1- READ IN INPUT & VALIDATE IT 
 - To compile and run a Euchre game with four players.
@@ -189,13 +202,12 @@ STEP 1- READ IN INPUT & VALIDATE IT
 -  containing the specified pack filename from argv
 - get stream
 -- cout << "Error opening " << ///pack_filename << endl;
-STEP 2- 
+STEP 2-  DEALS CARDS
 STEP 3
 STEP 4 
 - Ask player if they would like to make trump IF HUMAN
 */
-cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
-string answer;
+
 // cin << answer; 
 
 
