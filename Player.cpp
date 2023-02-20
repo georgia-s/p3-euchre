@@ -14,8 +14,9 @@
 
 class SimplePlayer : public Player {
 public:
-    // defualt constructor
-    SimplePlayer(std::string name) : simple_name(name) {}
+    // default constructor
+    SimplePlayer(std::string name) : simple_name(name) {
+    }
    
     //EFFECTS returns player's name
     const std::string & get_name() const{
