@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include "Player.h"
+#include <vector>
 using namespace std;
 
 //We recommend writing a Game ADT.

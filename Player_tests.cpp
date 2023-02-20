@@ -13,7 +13,7 @@ TEST(test_player_get_name) {
         delete alice;
     }
 
-
+//TEST SIMPLE PLAYER PLAY CARD
 TEST(test_simple_player_play_card) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -35,7 +35,8 @@ TEST(test_simple_player_play_card) {
       delete bob;
     }
 
-// round 1 take trump
+//MAKE TRUMP TEST CASES
+// round 1, not dealer, has two face cards 
 TEST(test_simple_player_make_trump_one) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
@@ -50,7 +51,7 @@ TEST(test_simple_player_make_trump_one) {
     Suit trump = HEARTS;
   bool orderup = bob->make_trump(
     king_hearts,    // Upcard
-    true,           // Bob is also the dealer
+    false,           // Bob is also the dealer
     1,              // First round
     trump           // Suit ordered up (if any)
   );
@@ -90,7 +91,7 @@ TEST(test_simple_player_make_trump_two) {
 }
 
 
-    // round 2 take trump
+    // round 1,dealer 
 TEST(test_simple_player_make_trump_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -106,7 +107,7 @@ TEST(test_simple_player_make_trump_three) {
     bool orderup = bob->make_trump(
     king_diamonds,    // Upcard
     true,           // Bob is also the dealer
-    1,              // first round
+    1,              // second round
     trump           // Suit ordered up (if any)
     );
 
@@ -115,7 +116,7 @@ TEST(test_simple_player_make_trump_three) {
     delete bob;
 }
 
-// round 2 dont take trump
+// round 2, screw the dealer 
 TEST(test_simple_player_make_trump_four) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
@@ -127,16 +128,17 @@ TEST(test_simple_player_make_trump_four) {
 
   // Bob makes trump
   Card king_diamonds(KING, DIAMONDS);
-    Suit trump;
+  
+    Suit trump = HEARTS;
   bool orderup = bob->make_trump(
-    king_diamonds,    // Upcard
+    king_diamonds,     // Upcard
     true,           // Bob is also the dealer
     2,              // second round
     trump           // Suit ordered up (if any)
   );
 
   // Verify Bob's order up and trump suit
-  ASSERT_FALSE(orderup);
+  ASSERT_TRUE(orderup);
   ASSERT_EQUAL(trump, HEARTS);
 
   delete bob;
@@ -169,13 +171,39 @@ TEST(test_simple_player_make_trump_five) {
   delete bob;
 }
 
-// round 3 dont take trump
+// round 2, not a dealer 
 TEST(test_simple_player_make_trump_six) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
     bob->add_card(Card(FOUR, DIAMONDS));
     bob->add_card(Card(QUEEN, DIAMONDS));
     bob->add_card(Card(KING, SPADES));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(THREE, SPADES));
+    
+    // Bob makes trump
+    Card king_clubs(KING, CLUBS);
+    Suit trump = CLUBS;
+    bool orderup = bob->make_trump(
+    king_clubs,    // Upcard
+    false,           // Bob is also the dealer
+    2,              // round 2
+    trump           // Suit ordered up (if any)
+    );
+
+  // Verify Bob's order up and trump suit
+  ASSERT_TRUE(orderup);
+  ASSERT_EQUAL(trump, CLUBS)  ;
+
+  delete bob;
+}
+//ROUND 2, no same color in hand
+TEST(test_simple_player_make_trump_seven) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(FOUR, DIAMONDS));
+    bob->add_card(Card(QUEEN, DIAMONDS));
+    bob->add_card(Card(KING, DIAMONDS));
     bob->add_card(Card(TEN, HEARTS));
     bob->add_card(Card(THREE, SPADES));
     
@@ -191,7 +219,6 @@ TEST(test_simple_player_make_trump_six) {
 
   // Verify Bob's order up and trump suit
   ASSERT_TRUE(orderup);
-  ASSERT_EQUAL(trump, CLUBS);
 
   delete bob;
 }

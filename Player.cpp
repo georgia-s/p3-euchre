@@ -30,8 +30,8 @@ public:
         }
         std::sort(simple_hand.begin(), simple_hand.end());
     }
-    
-    bool make_trump(const Card &upcard, bool is_dealer,
+    //SIMPLE PLAYER MAKE TRUMP 
+   bool make_trump(const Card &upcard, bool is_dealer,
                             int round, Suit &order_up_suit) const{
         for (size_t i=0; i < simple_hand.size(); ++i) {
             std::cout << "Human player " << simple_name << "'s hand: "
@@ -41,6 +41,7 @@ public:
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
+        int ace_or_face_same_as_other_color = 0;
         
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
@@ -62,18 +63,24 @@ public:
         if (round == 2) {
             if (is_dealer == true) {
                 order_up_suit = other_color;
-                return false;
+                return true;
             }
             for (size_t i=0; i < simple_hand.size(); ++i) {
-                if ((simple_hand[i].get_suit() == trump_suit
-                    || simple_hand[i].get_suit() == other_color)
-                    && (simple_hand[i].is_face_or_ace()) ) {
-                        ace_or_face_same_as_trump_count++;
+                if (simple_hand[i].get_suit() == trump_suit
+                     && simple_hand[i].is_face_or_ace()) {
+                    ace_or_face_same_as_trump_count++;
+                }
+                if (simple_hand[i].get_suit() == other_color
+                    && simple_hand[i].is_face_or_ace()) {
+                    ace_or_face_same_as_other_color++;
                 }
             }
             if (ace_or_face_same_as_trump_count >= 1) {
                 order_up_suit = trump_suit;
                 return true;
+            } else if (ace_or_face_same_as_other_color >= 1) {
+                    order_up_suit = other_color;
+                    return true;
             }
             else {
                 return false;
@@ -105,7 +112,7 @@ public:
     //"Lead" means to play the first Card in a trick.
     //The card is removed the player's hand.
     Card lead_card(Suit trump) {
-        Card max;
+        Card max = simple_hand[0];
         int start = 0;
         while (simple_hand[start].get_suit() == trump) {
             start++;
@@ -123,19 +130,15 @@ public:
             // all trump cards
             }
         }
-        if(trump_count == 0) {
-            if(start == simple_hand.size()) {
-                max = simple_hand[0];
-                for (int i = 0; i < simple_hand.size(); i++) {
-                    if (simple_hand[i] > max) {
-                        simple_hand[i] = max;
-                    }
-                }
-            }
+        
+        for (int i = 0; i < simple_hand.size(); i++) {
+         if(((trump_count == 0) && (start == simple_hand.size())) 
+            && (simple_hand[i] > max)) {
+            simple_hand[i] = max;
         }
-        return max;
     }
-    
+    return max;
+ }
     //REQUIRES Player has at least one card
     //EFFECTS Plays one Card from Player's hand
     //according to their strategy.

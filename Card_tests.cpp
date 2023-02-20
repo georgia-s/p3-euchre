@@ -268,7 +268,7 @@ TEST(test_card_less_two) {
 }
 
 TEST(test_Card_less_three) {
-    Card queen_spades = Card(QUEEN, SPADES);
+    //Card queen_spades = Card(QUEEN, SPADES);
     Card jack_hearts = Card(JACK, HEARTS);
     Card ace_diamonds = Card(ACE, DIAMONDS);
     Card king_clubs = Card(KING, CLUBS);
