@@ -259,12 +259,11 @@ TEST(test_card_less_one) {
 
 TEST(test_card_less_two) {
     Card three_clubs = Card(THREE, CLUBS);
-    Card jack_clubs = Card(JACK, CLUBS);
     Card ace_clubs = Card(ACE, CLUBS);
     Card king_clubs = Card(KING, CLUBS);
-    ASSERT_TRUE(Card_less(three_clubs, jack_clubs, CLUBS));
-    ASSERT_TRUE(Card_less(jack_clubs, king_clubs, three_clubs, CLUBS));
-    ASSERT_FALSE(Card_less(ace_clubs, jack_clubs, three_clubs, CLUBS));
+    ASSERT_TRUE(Card_less(three_clubs, ace_clubs, CLUBS));
+    ASSERT_TRUE(Card_less(king_clubs, ace_clubs, three_clubs, CLUBS));
+    ASSERT_FALSE(Card_less(ace_clubs, king_clubs, three_clubs, CLUBS));
 }
 
 TEST(test_Card_less_three) {
@@ -274,6 +273,45 @@ TEST(test_Card_less_three) {
     Card king_clubs = Card(KING, CLUBS);
     ASSERT_FALSE(Card_less(king_clubs, jack_hearts, CLUBS));
     ASSERT_TRUE(Card_less(king_clubs, jack_hearts, ace_diamonds,HEARTS));
+}
+
+// has right bower
+TEST(test_Card_less_four) {
+    Card jack_hearts = Card(JACK, HEARTS);
+    Card ace_diamonds = Card(ACE, DIAMONDS);
+    Card king_clubs = Card(KING, CLUBS);
+    // jack of hearts is right bower so its highest
+    ASSERT_TRUE(Card_less(ace_diamonds, jack_hearts, HEARTS));
+    // neither are same suit as led card
+    ASSERT_TRUE(Card_less(king_clubs, jack_hearts, ace_diamonds, HEARTS));
+}
+
+//has left bower and right bower
+TEST(test_Card_less_five) {
+    Card jack_clubs = Card(JACK, CLUBS);
+    Card jack_spades = Card(JACK, SPADES);
+    Card ace_diamonds = Card(ACE, DIAMONDS);
+    Card king_hearts = Card(KING, HEARTS);
+    // left bower is less than right bower
+    ASSERT_TRUE(Card_less(jack_spades, jack_clubs, CLUBS));
+    // right bower is greater than non trump suit
+    ASSERT_TRUE(Card_less(king_hearts, jack_clubs, CLUBS));
+    // left bower is greater than non trump suit
+    ASSERT_TRUE(Card_less(king_hearts, jack_spades, CLUBS));
+}
+
+//test led card and no trump
+TEST(test_Card_less_six) {
+    Card jack_clubs = Card(JACK, CLUBS);
+    Card jack_spades = Card(JACK, SPADES);
+    Card king_spades = Card(KING, SPADES);
+    Card ace_diamonds = Card(ACE, DIAMONDS);
+    Card king_hearts = Card(KING, HEARTS);
+    // led suit is spades
+    // same as led suit is higher than non trump card
+    ASSERT_TRUE(Card_less(king_hearts, jack_spades, king_spades, DIAMONDS));
+    // non trump card is lower than same as led suit
+    ASSERT_FALSE(Card_less(jack_spades, king_hearts, king_spades, DIAMONDS));
 }
 
 TEST(test_card_extract_two) {

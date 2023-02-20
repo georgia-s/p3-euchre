@@ -274,6 +274,17 @@ Suit Suit_next(Suit suit) {
 //EFFECTS Returns true if a is lower value than b.  Uses trump to determine
 // order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, Suit trump) {
+    if (b.is_right_bower(trump)) {
+        return true;
+    } else if (a.is_right_bower(trump)) {
+        return false;
+    }
+    if (b.is_left_bower(trump) && !a.is_right_bower(trump)) {
+        return true;
+    } else if (a.is_left_bower(trump) && !b.is_right_bower(trump)) {
+        return false;
+    }
+    
     if (b.get_suit() == trump && a.get_suit() == trump) {
         if (a.get_rank() < b.get_rank()) {
             return true;
@@ -312,18 +323,18 @@ bool Card_less(const Card &a, const Card &b, Suit trump) {
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump) {
     Suit suit = led_card.get_suit();
-    if (a.get_suit(trump) == trump || b.get_suit(trump) == trump) {
-        return Card_less(a, b, trump);
-    }
     if (a.get_suit() == suit && b.get_suit() == suit) {
         return Card_less(a, b, trump);
     }
+    
     if (a.get_suit() == suit && b.get_suit() != trump) {
         return false;
     }
+   
     if (b.get_suit() == suit && a.get_suit() != trump) {
         return true;
     }
+    
     if (a.get_suit() != suit && b.get_suit() != suit) {
         return Card_less(a, b, trump);
     }
