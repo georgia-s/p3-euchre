@@ -106,7 +106,7 @@ TEST(test_simple_player_make_trump_three) {
     bool orderup = bob->make_trump(
     king_diamonds,    // Upcard
     true,           // Bob is also the dealer
-    1,              // second round
+    1,              // first round
     trump           // Suit ordered up (if any)
     );
 
@@ -127,7 +127,7 @@ TEST(test_simple_player_make_trump_four) {
 
   // Bob makes trump
   Card king_diamonds(KING, DIAMONDS);
-    Suit trump = DIAMONDS;
+    Suit trump;
   bool orderup = bob->make_trump(
     king_diamonds,    // Upcard
     true,           // Bob is also the dealer
@@ -136,8 +136,8 @@ TEST(test_simple_player_make_trump_four) {
   );
 
   // Verify Bob's order up and trump suit
-  ASSERT_TRUE(orderup);
-  ASSERT_EQUAL(trump, DIAMONDS);
+  ASSERT_FALSE(orderup);
+  ASSERT_EQUAL(trump, HEARTS);
 
   delete bob;
 }

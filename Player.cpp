@@ -60,6 +60,10 @@ public:
         }
 
         if (round == 2) {
+            if (is_dealer == true) {
+                order_up_suit = other_color;
+                return false;
+            }
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if ((simple_hand[i].get_suit() == trump_suit
                     || simple_hand[i].get_suit() == other_color)

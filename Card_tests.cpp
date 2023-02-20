@@ -264,7 +264,7 @@ TEST(test_card_less_two) {
     Card king_clubs = Card(KING, CLUBS);
     ASSERT_TRUE(Card_less(three_clubs, jack_clubs, CLUBS));
     ASSERT_TRUE(Card_less(jack_clubs, king_clubs, three_clubs, CLUBS));
-    ASSERT_FALSE(Card_less(king_clubs, jack_clubs, three_clubs, CLUBS));
+    ASSERT_FALSE(Card_less(ace_clubs, jack_clubs, three_clubs, CLUBS));
 }
 
 TEST(test_Card_less_three) {
@@ -276,26 +276,27 @@ TEST(test_Card_less_three) {
     ASSERT_TRUE(Card_less(king_clubs, jack_hearts, ace_diamonds,HEARTS));
 }
 
-TEST(test_card_extract) {
+TEST(test_card_extract_two) {
     istringstream iss("Three of Spades");
     Card c;
     iss >> c;
     ASSERT_EQUAL(c, Card(THREE, SPADES));
-}TEST(test_card_insertion) {
+}
+TEST(test_card_insertion_two) {
     Card three_spades = Card(THREE, SPADES);
     ostringstream oss;
     oss << three_spades;
     ASSERT_EQUAL(oss.str(), "Three of Spades");
 }
 
-TEST(test_card_insertion_as_a_string) {
+TEST(test_card_insertion_as_a_string_two) {
     string six_hearts = "Six of Hearts";
     ostringstream oss;
     oss << six_hearts;
     ASSERT_EQUAL(oss.str(), "Six of Hearts");
 }
 
-TEST(test_card_get_suit_and_rank) {
+TEST(test_card_get_suit_and_rank_two) {
     Card six_diamonds = Card(SIX, DIAMONDS);
     ASSERT_EQUAL(six_diamonds.get_rank(), SIX);
     ASSERT_EQUAL(six_diamonds.get_suit(), DIAMONDS);
@@ -326,7 +327,7 @@ TEST(test_card_get_suit_and_rank) {
     ASSERT_EQUAL(jack_clubs.get_suit(SPADES), SPADES);
 }
 
-TEST (test_is_face_or_ace) {
+TEST (test_is_face_or_ace_two) {
     Card jack_diamonds = Card(JACK, DIAMONDS);
     ASSERT_TRUE(jack_diamonds.is_face_or_ace());
     
@@ -337,7 +338,7 @@ TEST (test_is_face_or_ace) {
     ASSERT_FALSE(two_clubs.is_face_or_ace());
 }
 
-TEST (test_is_right_or_left_bower) {
+TEST (test_is_right_or_left_bower_two) {
     Card jack_diamonds = Card(JACK, DIAMONDS);
     ASSERT_TRUE(jack_diamonds.is_right_bower(DIAMONDS));
     ASSERT_FALSE(jack_diamonds.is_left_bower(DIAMONDS));
