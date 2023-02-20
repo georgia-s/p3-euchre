@@ -167,6 +167,7 @@ public:
                 }
             }
         }
+       // simple_hand.erase(simple_hand.begin() + max);
         return max;
  }
     private:
