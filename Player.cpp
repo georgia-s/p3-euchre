@@ -267,31 +267,18 @@ public:
     }
 
     Card play_card(const Card &led_card, Suit trump){
-        Card max = human_hand[0];
-        bool same_suit = false;
-        for (int i = 0; i < human_hand.size(); i++) {
-            if (human_hand[i].get_suit() == led_card.get_suit()) {
-                same_suit = true;
-            }
+        for (size_t i=0; i < human_hand.size(); ++i) {
+            std::cout << "Human player " << human_name << "'s hand: "
+            << "[" << i << "] " << human_hand[i] << "\n";
         }
-        if (same_suit){
-            for (int i = 0; i < human_hand.size(); i++) {
-                if ((human_hand[i].get_suit() == led_card.get_suit())
-                    && (human_hand[i] > max)) {
-                        human_hand[i] = max;
-                }
-                human_hand.erase(human_hand.begin() + i);
-            }
-        } else {
-            for (int i = 0; i < human_hand.size(); i++) {
-                if (human_hand[i] > max) {
-                    human_hand[i] = max;
-                }
-                human_hand.erase(human_hand.begin() + i);
-            }
-        }
-        
-        return max;
+        std::cout << "Human player " << human_name
+                  << ", please select a card:\n";
+        Rank rank;
+        std::string junk;
+        Suit suit;
+        std::cin >> rank >> junk >> suit;
+        Card decision(rank, suit);
+        return decision;
     }
     
     private:
