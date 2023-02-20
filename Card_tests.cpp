@@ -236,6 +236,17 @@ TEST (test_is_right_or_left_bower) {
     ASSERT_FALSE(jack_clubs.is_trump(HEARTS));
 }
 
+TEST (test_is_right_or_left_bower_two) {
+    Card five_diamonds = Card(FIVE, DIAMONDS);
+    ASSERT_FALSE(five_diamonds.is_right_bower(SPADES));
+    ASSERT_FALSE(five_diamonds.is_right_bower(CLUBS));
+    ASSERT_FALSE(five_diamonds.is_right_bower(DIAMONDS));
+    ASSERT_FALSE(five_diamonds.is_left_bower(DIAMONDS));
+    ASSERT_FALSE(five_diamonds.is_left_bower(HEARTS));
+    ASSERT_FALSE(five_diamonds.is_left_bower(SPADES));
+    ASSERT_FALSE(five_diamonds.is_left_bower(CLUBS));
+}
+
 TEST(test_card_comparisons_four) {
     Card five_hearts = Card(FIVE, HEARTS);
     Card jack_diamonds = Card(JACK, DIAMONDS);
@@ -311,6 +322,21 @@ TEST(test_Card_less_six) {
     ASSERT_FALSE(Card_less(jack_spades, king_hearts, king_spades, DIAMONDS));
 }
 
+TEST(test_Card_less_seven) {
+    Card king_spades = Card(KING, SPADES);
+    Card king_clubs = Card(KING, CLUBS);
+    // led suit is spades
+    // same rank, dif suits, neither are trump suit
+    ASSERT_TRUE(Card_less(king_spades, king_clubs, DIAMONDS));
+    ASSERT_FALSE(Card_less(king_clubs, king_spades, DIAMONDS));
+    
+    Card five_hearts = Card(FIVE, HEARTS);
+    Card seven_diamonds = Card(KING, DIAMONDS);
+    // dif ranks, dif suits, neither are trump
+    ASSERT_TRUE(Card_less(five_hearts, seven_diamonds, SPADES));
+    ASSERT_FALSE(Card_less(seven_diamonds, five_hearts, SPADES));
+}
+
 TEST(test_card_extract_two) {
     istringstream iss("Three of Spades");
     Card c;
@@ -362,9 +388,56 @@ TEST(test_card_get_suit_and_rank_two) {
     ASSERT_EQUAL(jack_clubs.get_suit(SPADES), SPADES);
 }
 
+TEST(test_card_get_suit_and_rank_three) {
+    Card jack_diamonds = Card(JACK, DIAMONDS);
+    ASSERT_EQUAL(jack_diamonds.get_rank(), JACK);
+    ASSERT_EQUAL(jack_diamonds.get_suit(), DIAMONDS);
+    ASSERT_EQUAL(jack_diamonds.get_suit(HEARTS), HEARTS);
+
+    Card jack_hearts = Card(JACK, HEARTS);
+    ASSERT_EQUAL(jack_hearts.get_rank(), JACK);
+    ASSERT_EQUAL(jack_hearts.get_suit(), HEARTS);
+    ASSERT_EQUAL(jack_hearts.get_suit(DIAMONDS), DIAMONDS);
+    
+    Card jack_spades = Card(JACK, SPADES);
+    ASSERT_EQUAL(jack_spades.get_rank(), JACK);
+    ASSERT_EQUAL(jack_spades.get_suit(), SPADES);
+    ASSERT_EQUAL(jack_spades.get_suit(CLUBS), CLUBS);
+    
+    Card jack_clubs = Card(JACK, CLUBS);
+    ASSERT_EQUAL(jack_clubs.get_rank(), JACK);
+    ASSERT_EQUAL(jack_clubs.get_suit(), CLUBS);
+    ASSERT_EQUAL(jack_clubs.get_suit(SPADES), SPADES);
+}
+
+// test jacks passed with non same color suits
+TEST(test_card_get_suit_and_rank_four) {
+    Card jack_diamonds = Card(JACK, DIAMONDS);
+    ASSERT_EQUAL(jack_diamonds.get_suit(SPADES), DIAMONDS);
+    ASSERT_EQUAL(jack_diamonds.get_suit(CLUBS), DIAMONDS);
+    
+    Card jack_hearts = Card(JACK, HEARTS);
+    ASSERT_EQUAL(jack_hearts.get_suit(SPADES), HEARTS);
+    ASSERT_EQUAL(jack_hearts.get_suit(CLUBS), HEARTS);
+    
+    Card jack_spades = Card(JACK, SPADES);
+    ASSERT_EQUAL(jack_spades.get_suit(HEARTS), SPADES);
+    ASSERT_EQUAL(jack_spades.get_suit(DIAMONDS), SPADES);
+    
+    Card jack_clubs = Card(JACK, CLUBS);
+    ASSERT_EQUAL(jack_clubs.get_suit(HEARTS), CLUBS);
+    ASSERT_EQUAL(jack_clubs.get_suit(DIAMONDS), CLUBS);
+}
+
 TEST (test_is_face_or_ace_two) {
     Card jack_diamonds = Card(JACK, DIAMONDS);
     ASSERT_TRUE(jack_diamonds.is_face_or_ace());
+    
+    Card queen_hearts = Card(QUEEN, HEARTS);
+    ASSERT_TRUE(queen_hearts.is_face_or_ace());
+    
+    Card king_hearts = Card(KING, HEARTS);
+    ASSERT_TRUE(king_hearts.is_face_or_ace());
     
     Card ace_hearts = Card(ACE, HEARTS);
     ASSERT_TRUE(ace_hearts.is_face_or_ace());
@@ -373,7 +446,7 @@ TEST (test_is_face_or_ace_two) {
     ASSERT_FALSE(two_clubs.is_face_or_ace());
 }
 
-TEST (test_is_right_or_left_bower_two) {
+TEST (test_is_right_or_left_bower_three) {
     Card jack_diamonds = Card(JACK, DIAMONDS);
     ASSERT_TRUE(jack_diamonds.is_right_bower(DIAMONDS));
     ASSERT_FALSE(jack_diamonds.is_left_bower(DIAMONDS));
