@@ -115,10 +115,10 @@ public:
     Card lead_card(Suit trump) {
         Card max = simple_hand[0];
         int start = 0;
-        while (simple_hand[start].get_suit() == trump) {
+        while (simple_hand[start].get_suit() == trump && start != simple_hand.size()) {
             start++;
         }
-        if (start != 0) {
+        if (start != 0 && start != simple_hand.size()) {
             max = simple_hand[start];
         }
         int trump_count = 0;
@@ -135,7 +135,7 @@ public:
         for (int i = 0; i < simple_hand.size(); i++) {
          if(((trump_count == 0) && (start == simple_hand.size())) 
             && (simple_hand[i] > max)) {
-            simple_hand[i] = max;
+             max = simple_hand[i];
         }
     }
     return max;
