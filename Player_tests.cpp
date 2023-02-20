@@ -27,11 +27,11 @@ TEST(test_simple_player_play_card) {
       Card nine_diamonds(NINE, DIAMONDS);
       Card card_played = bob->play_card(
         nine_diamonds,  // Nine of Diamonds is led
-        HEARTS    // Trump suit
+        HEARTS       // Trump suit
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(NINE, SPADES));
+      ASSERT_EQUAL(card_played, Card(TEN, DIAMONDS));
       delete bob;
     }
 

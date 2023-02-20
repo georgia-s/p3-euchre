@@ -155,19 +155,18 @@ public:
             for (int i = 0; i < simple_hand.size(); i++) {
                 if ((simple_hand[i].get_suit() == led_card.get_suit())
                     && (simple_hand[i] > max)) {
-                        simple_hand[i] = max;
+                        max = simple_hand[i];
                 }
-                simple_hand.erase(simple_hand.begin() + i);
             }
         } 
         else {
             for (int i = 0; i < simple_hand.size(); i++) {
                 if (simple_hand[i] > max) {
-                    simple_hand[i] = max;
+                    max = simple_hand[i];
                 }
-                simple_hand.erase(simple_hand.begin() + i);
             }
         }
+       // simple_hand.erase(simple_hand.begin() + max);
         return max;
     }
 
