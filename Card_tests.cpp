@@ -259,12 +259,11 @@ TEST(test_card_less_one) {
 
 TEST(test_card_less_two) {
     Card three_clubs = Card(THREE, CLUBS);
-    Card jack_clubs = Card(JACK, CLUBS);
     Card ace_clubs = Card(ACE, CLUBS);
     Card king_clubs = Card(KING, CLUBS);
-    ASSERT_TRUE(Card_less(three_clubs, jack_clubs, CLUBS));
-    ASSERT_TRUE(Card_less(jack_clubs, king_clubs, three_clubs, CLUBS));
-    ASSERT_FALSE(Card_less(ace_clubs, jack_clubs, three_clubs, CLUBS));
+    ASSERT_TRUE(Card_less(three_clubs, ace_clubs, CLUBS));
+    ASSERT_TRUE(Card_less(king_clubs, ace_clubs, three_clubs, CLUBS));
+    ASSERT_FALSE(Card_less(ace_clubs, king_clubs, three_clubs, CLUBS));
 }
 
 TEST(test_Card_less_three) {
