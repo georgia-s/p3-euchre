@@ -34,7 +34,7 @@ public:
    bool make_trump(const Card &upcard, bool is_dealer,
                             int round, Suit &order_up_suit) const{
         for (size_t i=0; i < simple_hand.size(); ++i) {
-            std::cout << "Human player " << simple_name << "'s hand: "
+            std::cout << "Simple player " << simple_name << "'s hand: "
             << "[" << i << "] " << simple_hand[i] << "\n";
         }
         
@@ -145,19 +145,31 @@ public:
     //The card is removed from the player's hand.
     Card play_card(const Card &led_card, Suit trump){
         Card max = simple_hand[0];
-        Card min = simple_hand[0];
+        int count = 0;
+        // makes sure that left bower isn't set to lowest
+        while (simple_hand[count].is_left_bower(led_card.get_suit())) {
+            count++;
+        }
+        Card min = simple_hand[count];
+
         bool same_suit = false;
         for (int i = 0; i < simple_hand.size(); i++) {
             if (simple_hand[i].get_suit() == led_card.get_suit()) {
                 same_suit = true;
             }
         }
+
+        bool right_bower_present = false;
         // can follow suit, so plays highest
-        if (same_suit){
+        if (same_suit == true){
             for (int i = 0; i < simple_hand.size(); i++) {
+                if (simple_hand[i].is_right_bower(led_card.get_suit())) {
+                    max = simple_hand[i];
+                    right_bower_present = true;
+                }
                 if ((simple_hand[i].get_suit() == led_card.get_suit())
-                    && (simple_hand[i] > max)) {
-                        max = simple_hand[i];
+                    && (simple_hand[i] > max) && right_bower_present == false) {
+                    max = simple_hand[i];
                 }
             }
             return max;
@@ -165,7 +177,7 @@ public:
         // cant follow suit, so plays lowest
         else {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] < min) {
+                if (simple_hand[i] < min && !simple_hand[i].is_left_bower(led_card.get_suit())) {
                     min = simple_hand[i];
                 }
             }

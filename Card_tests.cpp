@@ -290,7 +290,6 @@ TEST(test_Card_less_four) {
 TEST(test_Card_less_five) {
     Card jack_clubs = Card(JACK, CLUBS);
     Card jack_spades = Card(JACK, SPADES);
-    Card ace_diamonds = Card(ACE, DIAMONDS);
     Card king_hearts = Card(KING, HEARTS);
     // left bower is less than right bower
     ASSERT_TRUE(Card_less(jack_spades, jack_clubs, CLUBS));
@@ -302,10 +301,8 @@ TEST(test_Card_less_five) {
 
 //test led card and no trump
 TEST(test_Card_less_six) {
-    Card jack_clubs = Card(JACK, CLUBS);
     Card jack_spades = Card(JACK, SPADES);
     Card king_spades = Card(KING, SPADES);
-    Card ace_diamonds = Card(ACE, DIAMONDS);
     Card king_hearts = Card(KING, HEARTS);
     // led suit is spades
     // same as led suit is higher than non trump card

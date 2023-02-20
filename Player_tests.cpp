@@ -57,7 +57,7 @@ TEST(test_simple_player_play_card_two) {
       delete bob;
     }
 
-//TEST SIMPLE PLAYER PLAY CARD, all led suit
+//TEST SIMPLE PLAYER PLAY CARD, all led suit with right bower
 TEST(test_simple_player_play_card_three) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -75,9 +75,54 @@ TEST(test_simple_player_play_card_three) {
       );
 
       // Verify the card Bob played
+      ASSERT_EQUAL(card_played, Card(JACK, DIAMONDS));
+      delete bob;
+    }
+
+//TEST SIMPLE PLAYER PLAY CARD, all led suit
+TEST(test_simple_player_play_card_four) {
+      // Bob's hand
+      Player * bob = Player_factory("Bob", "Simple");
+      bob->add_card(Card(NINE, DIAMONDS));
+      bob->add_card(Card(TEN, DIAMONDS));
+      bob->add_card(Card(QUEEN, DIAMONDS));
+      bob->add_card(Card(KING, DIAMONDS));
+      bob->add_card(Card(FIVE, DIAMONDS));
+
+      // Bob plays a card
+      Card seven_diamonds(SEVEN, DIAMONDS);
+      Card card_played = bob->play_card(
+        seven_diamonds,  // seven of diamonds is led
+        DIAMONDS       // Trump suit
+      );
+
+      // Verify the card Bob played
       ASSERT_EQUAL(card_played, Card(KING, DIAMONDS));
       delete bob;
     }
+
+//TEST SIMPLE PLAYER PLAY CARD, none of led suit, right bower
+TEST(test_simple_player_play_card_five) {
+      // Bob's hand
+      Player * bob = Player_factory("Bob", "Simple");
+      bob->add_card(Card(JACK, SPADES));
+      bob->add_card(Card(QUEEN, HEARTS));
+      bob->add_card(Card(QUEEN, DIAMONDS));
+      bob->add_card(Card(KING, HEARTS));
+      bob->add_card(Card(ACE, DIAMONDS));
+
+      // Bob plays a card
+      Card seven_clubs(SEVEN, CLUBS);
+      Card card_played = bob->play_card(
+        seven_clubs,  // seven of clubs is led
+        CLUBS       // Trump suit
+      );
+
+      // Verify the card Bob played
+      ASSERT_EQUAL(card_played, Card(QUEEN, HEARTS));
+      delete bob;
+    }
+
 
 //MAKE TRUMP TEST CASES
 // round 1, not dealer, makes trump
