@@ -31,7 +31,7 @@ TEST(test_simple_player_play_card) {
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(NINE, SPADES));
+      ASSERT_EQUAL(card_played, Card(TEN, DIAMONDS));
       delete bob;
     }
 
@@ -171,7 +171,7 @@ TEST(test_simple_player_make_trump_five) {
   delete bob;
 }
 
-// round 2, not a dealer 
+// round 2, not a dealer PASSED
 TEST(test_simple_player_make_trump_six) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -197,7 +197,7 @@ TEST(test_simple_player_make_trump_six) {
 
   delete bob;
 }
-//ROUND 2, no same color in hand
+//ROUND 2, no same color in hand PASSED
 TEST(test_simple_player_make_trump_seven) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -222,7 +222,7 @@ TEST(test_simple_player_make_trump_seven) {
 
   delete bob;
 }
-
+// PASSED
 TEST(test_simple_player_lead_card) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");

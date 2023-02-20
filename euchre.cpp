@@ -5,6 +5,15 @@
 #include "Player.h"
 #include <vector>
 using namespace std;
+//NEED A WAY TO KEEP SCORE 
+int teamOneScore = 0; 
+int teamTwoScore = 0; 
+/*INPUT IS GIVEN 
+- pack file
+- shuffled
+- points to win
+- player name & type 
+*/
 
 //We recommend writing a Game ADT.
 

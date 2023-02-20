@@ -144,6 +144,7 @@ public:
     //according to their strategy.
     //The card is removed from the player's hand.
     Card play_card(const Card &led_card, Suit trump){
+        
         Card max = simple_hand[0];
         bool same_suit = false;
         for (int i = 0; i < simple_hand.size(); i++) {
@@ -155,22 +156,19 @@ public:
             for (int i = 0; i < simple_hand.size(); i++) {
                 if ((simple_hand[i].get_suit() == led_card.get_suit())
                     && (simple_hand[i] > max)) {
-                        simple_hand[i] = max;
+                        max = simple_hand[i];
                 }
-                simple_hand.erase(simple_hand.begin() + i);
             }
         } 
         else {
             for (int i = 0; i < simple_hand.size(); i++) {
                 if (simple_hand[i] > max) {
-                    simple_hand[i] = max;
+                    max = simple_hand[i];
                 }
-                simple_hand.erase(simple_hand.begin() + i);
             }
         }
         return max;
-    }
-
+ }
     private:
         std::vector <Card> simple_hand;
         std::string simple_name;
@@ -251,8 +249,6 @@ public:
         return decision;
     }
 
-    
-    // need to do
     Card play_card(const Card &led_card, Suit trump){
         Card max = human_hand[0];
         bool same_suit = false;
