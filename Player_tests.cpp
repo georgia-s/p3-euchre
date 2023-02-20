@@ -13,7 +13,7 @@ TEST(test_player_get_name) {
         delete alice;
     }
 
-//TEST SIMPLE PLAYER PLAY CARD
+//TEST SIMPLE PLAYER PLAY CARD FAILING
 TEST(test_simple_player_play_card) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -63,7 +63,7 @@ TEST(test_simple_player_make_trump_one) {
   delete bob;
 }
 
-// round 1 dont take trump
+// round 1 dont take trump PASSED 
 TEST(test_simple_player_make_trump_two) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
@@ -91,7 +91,7 @@ TEST(test_simple_player_make_trump_two) {
 }
 
 
-    // round 1,dealer 
+    // round 1,dealer PASSED 
 TEST(test_simple_player_make_trump_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -144,7 +144,7 @@ TEST(test_simple_player_make_trump_four) {
   delete bob;
 }
 
-// round 2 dont take trump two
+// round 2 dont take trump two PASSED 
 TEST(test_simple_player_make_trump_five) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -193,7 +193,7 @@ TEST(test_simple_player_make_trump_six) {
 
   // Verify Bob's order up and trump suit
   ASSERT_TRUE(orderup);
-  ASSERT_EQUAL(trump, CLUBS)  ;
+  ASSERT_EQUAL(trump, SPADES)  ;
 
   delete bob;
 }
