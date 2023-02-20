@@ -56,21 +56,21 @@ TEST(test_simple_player_play_card_two) {
       ASSERT_EQUAL(card_played, Card(NINE, SPADES));
       delete bob;
     }
-
+//FALSE POSITIVE 
 //TEST SIMPLE PLAYER PLAY CARD, all led suit with right bower
 TEST(test_simple_player_play_card_three) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
-      bob->add_card(Card(NINE, DIAMONDS));
+      bob->add_card(Card(NINE, SPADES));
       bob->add_card(Card(TEN, DIAMONDS));
       bob->add_card(Card(JACK, DIAMONDS));
       bob->add_card(Card(KING, DIAMONDS));
-      bob->add_card(Card(FIVE, DIAMONDS));
+      bob->add_card(Card(NINE, CLUBS));
 
       // Bob plays a card
-      Card seven_diamonds(SEVEN, DIAMONDS);
+      Card nine_diamonds(NINE, DIAMONDS);
       Card card_played = bob->play_card(
-        seven_diamonds,  // seven of diamonds is led
+        nine_diamonds,  // seven of diamonds is led
         DIAMONDS       // Trump suit
       );
 
@@ -112,9 +112,9 @@ TEST(test_simple_player_play_card_five) {
       bob->add_card(Card(ACE, DIAMONDS));
 
       // Bob plays a card
-      Card seven_clubs(SEVEN, CLUBS);
+      Card nine_clubs(NINE, CLUBS);
       Card card_played = bob->play_card(
-        seven_clubs,  // seven of clubs is led
+        nine_clubs,  // seven of clubs is led
         CLUBS       // Trump suit
       );
 
