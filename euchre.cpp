@@ -54,6 +54,7 @@ std::istream & operator>>(std::istream &is) {
   while (is) {}
   is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >>
    name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type; 
+    return is;
   }
 
 
