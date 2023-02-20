@@ -30,6 +30,7 @@ using namespace std;
 /* PLAY THE GAME
 1. Determining whether a game has won yet
 - check if either team has >= pointsToWin
+
 2. deal the cards to each player
 - 3 2 3 2 2 3 2 3
 3. Get the upcard
@@ -51,6 +52,7 @@ using namespace std;
 - bracket style 
 - trick point goes to winner 
 - leader is whoever played the winner, whoever played the highest card in the game
+
 - DETERMINING THE SCORE
   - 1. winning team did not call trump 
       - they will get 2 points given to them
@@ -59,28 +61,22 @@ using namespace std;
         - 3/5 or 4/5 gets 1 points and 5/5 gets 2 points
     - repeat cycle at the top and check if anyone has won yet! 
 
-
-
-
-// STEPS
-/*
-1. Read in input
-2. Validate input
-3. Play the game
-*/
-// We recommend writing a Game ADT.
-
 // The Game and its helper functions do the hard work,
 // and the main() function is simple.
-
-class Game
-{
+*/
+class Game {
 public:
 const int MAX_POINTS_TO_WIN= 100;
 const int MIN_POINTS_TO_WIN = 1;
+void errorMessage() {
+  cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+         << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+         << "NAME4 TYPE4" << endl;
+}
 void Player_init (string name, string name_type) {
   if (name_type == "Simple") {
     Player.get_name(); 
+  }
 
 }
 //GAME IS WON BOolL
@@ -98,13 +94,9 @@ bool gameWon (Game points_to_win, Game teamOneScore, Game teamTwoScore) {
   // constructer
   Game(/* game details */);
   // void play();
-  void error_Message()
-  {
-    // if stream is bad or something
-    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
-         << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
-         << "NAME4 TYPE4" << endl;
-  }
+
+    
+  
   void make_trump() {
     cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
 string answer;
@@ -130,7 +122,8 @@ string answer;
   return is; 
 }
 
-private:
+
+private: 
   // std::vector<Player*> players;
   // Pack pack;
   // Which helper functions would help simplify the play() function?
@@ -182,16 +175,26 @@ Game::Game()
 // Game::Game() {
 //  Player get_name();
 
-}; 
+};
 
-int main() {
+int main(int argc, char *argv[]) {
+  /*PRINT ERROR MESSAGE IF: 
+  - If user does not put 12 arguments in to terminal, print error message
+  - If points to win is not within range
+  - if argument 3 is not the string shuffle or no shuffle 
+  - if argument 5,7,9,11 are not player types 
+  */
+string shufflestring = argv[2];  
+if ((argc != 12) || ((atoi(argv[3]) < 1) || (atoi(argv[3]) > 100)) || (((shufflestring != "shuffle")) || (argv[2] != "noshuffle" ))){
+  Game errorMessage(); 
+  return 1; 
+}
+if ((argv[5] || argv[7] || argv[9] || argv [11]) != ("Simple" || "Human")) {
+  Game errorMessage(); 
+  return 1; 
+}
 
-  
-  Player_factory(name1,name1_type); 
-  Player_factory(name2,name2_type); 
-  Player_factory(name3,name3_type); 
-  Player_factory(name4,name4_type); 
-  }
+
 /*
 STEP 1- READ IN INPUT & VALIDATE IT 
 - To compile and run a Euchre game with four players.
@@ -202,40 +205,36 @@ STEP 1- READ IN INPUT & VALIDATE IT
 -  containing the specified pack filename from argv
 - get stream
 -- cout << "Error opening " << ///pack_filename << endl;
+2. INITIALIZE NAMES, POINTS TO WIN, ETC. 
+  + Check if human name or simple name to decide which function to call
 STEP 2-  DEALS CARDS
-STEP 3
-STEP 4 
-- Ask player if they would like to make trump IF HUMAN
+STEP 3- ANNOUNCE HAND 
+  + At the beginning of each hand, announce the hand,
+  + starting at zero, followed by the dealer and the upcard.
+  + Print the decision of each player during the making procedure.
+  + Print an extra newline when making, adding, and discarding is complete.
+STEP 4 - EACH OF THE 5 TRICKS IS ANNOUNCED, INCLUDING THE LEAD, CARDS PLAYED,
+ & THE PLAYER THAT TOOK THE TRICK
+  + Print an extra newline at the end of each trick.
+STEP 5 - AT THE END OF THE HAND, PRINT WINNERS 
+  + When printing the names of a partnership, print the player w/ the lower index first 
+  For example, Adi was specified on the command line before Chi-Chih, so he goes first.
+STEP 6- IF MARCH OCCURS...
+  + If a march occurs, print march! followed by a newline.
+    - march is when a team takes all 5 tricks 
+  + If euchre occurs, print euchred! followed by a newline.
+    - If the winning team did not order up, they receive 2 points for taking 3, 4 or 5 
+      tricks, which is called euchred.
+  + If neither occurs, print nothing.
+  + Print the score, followed by an extra newline.
+    - cout << current score << endl; 
+STEP 7 - GAME IS OVER
+  + When the game is over, print the winners of the game.
+  + At the end of a game, delete the Player objects created by the Player_factory.
 */
 
-// cin << answer; 
+} 
 
-
-  // 
-
-  // Check if human name or simple name to decide which function to call
-
-  // At the beginning of each hand, announce the hand,
-  // starting at zero, followed by the dealer and the upcard.
-  // Print the decision of each player during the making procedure.
-  // Print an extra newline when making, adding, and discarding is complete.
-  // Each of the five tricks is announced, including the lead,
-  // cards played and the player that took the trick.
-  // Print an extra newline at the end of each trick.
-  // At the end of the hand, print the winners of the hand.
-  // When printing the names of a partnership, print the player
-  // with the lower index first. For example, Adi was specified on
-  // the command line before Chi-Chih, so he goes first.
-  // If a march occurs, print march! followed by a newline.
-  // If euchre occurs, print euchred! followed by a newline.
-  // If neither occurs, print nothing.
-  // Print the score, followed by an extra newline.
-  // When the game is over, print the winners of the game.
-} // At the end of a game, delete the Player objects created by the Player_factory.
-
-// or (size_t i = 0; i < players.size(); ++i) {
-// delete players[i];
-//}
 
 // SCORING
 // The team that takes the majority of tricks receives points for that hand.
