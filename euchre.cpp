@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Pack.h"
 #include "Card.h"
+#include <cassert>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -231,9 +233,9 @@ int main(int argc, char *argv[]) {
   }
 
   ifstream is(argv[1]);
-  if (!is.isopen()) {
-     string pack_filename = argv[1] =
-    std::cout << "Error opening " << pack_filename << endl;
+  if (!is.is_open()) {
+     string pack_filename = argv[1]; 
+    cout << "Error opening " << pack_filename << endl;
   }
   //set argument 3 to points to win private variable
 

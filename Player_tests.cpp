@@ -390,7 +390,7 @@ TEST(test_simple_player_lead_card_two) {
 TEST(test_simple_player_lead_card_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
-    bob->add_card(Card(FIVE, SPADES));
+    bob->add_card(Card(JACK, SPADES));
     bob->add_card(Card(TEN, SPADES));
     bob->add_card(Card(QUEEN, SPADES));
     bob->add_card(Card(ACE, SPADES));
@@ -403,8 +403,8 @@ TEST(test_simple_player_lead_card_three) {
     Card card_led = bob->lead_card(SPADES);
 
     // Verify the card Bob selected to lead
-    Card ace_spades(ACE, SPADES);
-    ASSERT_EQUAL(card_led, ace_spades); //check led card
+    Card jack_spades(JACK, SPADES);
+    ASSERT_EQUAL(card_led, jack_spades); //check led card
 
     delete bob;
 }
