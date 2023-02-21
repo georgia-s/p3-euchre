@@ -73,14 +73,30 @@ using namespace std;
 class Game {
 public:
   // NON-DEFAULT CSTOR
-  Game(int number, string name_1) {
+  Game(int number, string player0name, string player1name, string player2name, string player3name, string player0type, string player1type, string player2type, string player3type) {
     points_to_win = number; 
-    name1 = name_1; 
-  }
+    name0 = player0name; 
+    name1 = player1name;
+    name2 = player2name;
+    name3 = player3name;
+    name0_type = player0type;
+    name1_type = player1type;
+    name2_type = player2type; 
+    name3_type = player3type; 
+    Player * player0 = Player_factory(player0name, player0type);
+  Player * player1 = Player_factory(player1name, player1type);
+  Player * player2 = Player_factory(player2name, player2type);
+  Player * player3 = Player_factory(player3name, player3type);
+  addPlayer(player0); 
+  addPlayer(player1); 
+  addPlayer(player2); 
+   addPlayer(player3); 
  
-  // DEFAULT CSTOR
-  Game() {
+
   }
+
+  // DEFAULT CSTOR
+  Game() {}
   const int MAX_POINTS_TO_WIN= 100;
   const int MIN_POINTS_TO_WIN = 1;
   void deal(){
@@ -120,9 +136,10 @@ public:
   void updateHand() {
   ++hand;
 }
-  void addPlayer(Player* Player1) {
-    Players.push_back(Player1);
+  void addPlayer(Player* player) {
+    Players.push_back(player);
 }
+  
   void updateDealer() {
     if (dealer < 4) {
       dealer = dealer + 1;
@@ -139,9 +156,6 @@ public:
          << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
          << "NAME4 TYPE4" << endl;
   } 
-
-//CHECK IF PLAYER IS SIMPLE OR HUMAN USING PLAYER FACTORY
-
   void make_trump() {
     cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
   string answer;
@@ -186,20 +200,20 @@ private:
     Pack pack;
     int dealer;
     int hand;
+    string name0;
     string name1;
     string name2;
     string name3;
-    string name4;
+    string name0_type;
     string name1_type;
     string name2_type;
     string name3_type;
-    string name4_type;
     string pack;
     string shuffle;
 int teamOneScore = 0;
 int teamTwoScore = 0;
 string points_to_win = 0; 
-vector<string> players;
+//vector<string> players;
 
 };
 
@@ -236,23 +250,21 @@ int main(int argc, char *argv[]) {
     cout << "Error opening " << pack_filename << endl;
   }
   //set argument 3 to points to win private variable
+  string player0name = argv[4];
   string player0type = argv[5];   
-  string player0name = argv[4]; 
   string player1name = argv[6]; 
   string player1type = argv[7];   
   string player2name = argv[8]; 
   string player2type = argv[9];   
   string player3name = argv[10]; 
   string player3type = argv[11];   
- 
-  Player * player0 = Player_factory(player0name, player0type);
-  Player * player1 = Player_factory(player1name, player1type);
-  Player * player2 = Player_factory(player2name, player2type);
-  Player * player3 = Player_factory(player3name, player3type);
-  
-  
+  int number = atoi(argv[3]); 
+  //Player * player0 = Player_factory(player0name, player0type);
 
-}
+  //Game addPlayer(player0 player0); 
+  Game g; 
+  g.deal(); 
+
 
 
 

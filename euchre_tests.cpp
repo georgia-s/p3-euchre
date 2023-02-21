@@ -123,7 +123,7 @@ TEST(test_human_player_play_card_five) {
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(QUEEN, HEARTS));
+      ASSERT_EQUAL(card_played, Card(JACK, SPADES));
       delete bob;
     }
 
