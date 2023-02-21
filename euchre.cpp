@@ -114,40 +114,37 @@ public:
   Players[3]->add_card(pack.deal_one());
   Card upcard = pack.deal_one();   
   cout << "Hand " << hand << endl;
-  cout << Players[dealer].get_name() << " deals" << endl;
+  cout << Players[dealer]->get_name() << " deals" << endl;
   cout << upcard << " turned up" << endl;
 }
   void updateHand() {
   ++hand;
 }
-  void addPlayer(Player* Players) {
-  Players-->push_back(Players);
+  void addPlayer(Player* Player1) {
+    Players.push_back(Player1);
 }
   void updateDealer() {
-  if (dealer < 4) {
-    dealer = dealer + 1;
-  }
-   else if (dealer == 4) {
+    if (dealer < 4) {
+      dealer = dealer + 1;
+    }
+    else if (dealer == 4) {
     dealer = 0;
-  }
-}
+    }
+  } 
   void shuffle () {
-  Pack shuffle(); 
-}
+    pack.shuffle(); 
+  }
   void errorMessage() {
   cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
          << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
          << "NAME4 TYPE4" << endl;
-}
+  } 
 
 //CHECK IF PLAYER IS SIMPLE OR HUMAN USING PLAYER FACTORY
 
-
-
-  
   void make_trump() {
     cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
-string answer;
+  string answer;
   }
   //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES 
   void set_points_to_win(int number){
@@ -162,6 +159,7 @@ string answer;
   int get_dealer_posistion(int dealer_posistion) {
     return dealer_posistion; 
   }
+  
  
 
  /* while (is) {
@@ -238,8 +236,23 @@ int main(int argc, char *argv[]) {
     cout << "Error opening " << pack_filename << endl;
   }
   //set argument 3 to points to win private variable
+  string player0type = argv[5];   
+  string player0name = argv[4]; 
+  string player1name = argv[6]; 
+  string player1type = argv[7];   
+  string player2name = argv[8]; 
+  string player2type = argv[9];   
+  string player3name = argv[10]; 
+  string player3type = argv[11];   
+ 
+  Player * player0 = Player_factory(player0name, player0type);
+  Player * player1 = Player_factory(player1name, player1type);
+  Player * player2 = Player_factory(player2name, player2type);
+  Player * player3 = Player_factory(player3name, player3type);
+  
+  
 
-  }
+}
 
 
 
