@@ -192,6 +192,9 @@ public:
             if (simple_hand[i].get_suit() == led_card.get_suit()) {
                 same_suit = true;
             }
+            if (simple_hand[i].is_left_bower(led_card.get_suit())) {
+                same_suit = true;
+            }
         }
 
         bool right_bower_present = false;
@@ -202,9 +205,11 @@ public:
                     max = simple_hand[i];
                     right_bower_present = true;
                 }
-                if ((simple_hand[i].get_suit() == led_card.get_suit())
-                    && (simple_hand[i] > max) && right_bower_present == false) {
-                    max = simple_hand[i];
+                
+                if (simple_hand[i].get_suit() == led_card.get_suit() || simple_hand[i].is_left_bower(led_card.get_suit()) == true) {
+                    if (simple_hand[i] > max && right_bower_present == false) {
+                        max = simple_hand[i];
+                    }
                 }
             }
             return max;

@@ -101,7 +101,7 @@ TEST(test_simple_player_play_card_four) {
       delete bob;
     }
 
-//TEST SIMPLE PLAYER PLAY CARD, none of led suit, right bower
+//TEST SIMPLE PLAYER PLAY CARD, none of led suit, left bower
 TEST(test_simple_player_play_card_five) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -119,7 +119,7 @@ TEST(test_simple_player_play_card_five) {
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(QUEEN, HEARTS));
+      ASSERT_EQUAL(card_played, Card(JACK, SPADES));
       delete bob;
     }
 
