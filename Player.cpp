@@ -125,7 +125,8 @@ public:
 
          // sees how many trump cards there are before reaching
          // a non trump card
-        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump)) && start != simple_hand.size()) {
+        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump))
+               && start != simple_hand.size()) {
             start++;
         }
         
@@ -167,7 +168,8 @@ public:
         // excludes left bower bc its cosidered trump card
         if (trump_count < simple_hand.size()) {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i] > max) && (!simple_hand[i].is_left_bower(trump))
+                if ((simple_hand[i] > max)
+                    && (!simple_hand[i].is_left_bower(trump))
                     && (simple_hand[i].get_suit() != trump)) {
                     max = simple_hand[i];
                 }

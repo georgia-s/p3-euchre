@@ -721,7 +721,5 @@ TEST(test_simple_player_lead_card_eight) {
     delete bob;
 }
 
-
-
 TEST_MAIN()
 
