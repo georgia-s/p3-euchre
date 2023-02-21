@@ -144,11 +144,26 @@ public:
          << "NAME4 TYPE4" << endl;
   } 
 
-  void make_trump() {
-    
-    cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
-    string answer;
+   void make_trump() {
+      while ((!Players[count]->make_trump(upcard, is_dealer(), round, order_up_suit)) && (count < 4)) {
+
+          count++;
+      }
+      updateRound();
+      
   }
+    void updateRound() {
+        round = round + 1;
+        count = 0; 
+    }
+    bool is_dealer(){
+        if (count == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
   //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES 
   void set_points_to_win(int number){
     points_to_win = number; 
@@ -174,7 +189,13 @@ public:
 */
 
 
-private: 
+private:
+    Card upcard;
+    int round;
+    Suit order_up_suit;
+    int count = 0;
+    
+    
   // std::vector<Player*> players;
   // Pack pack;
   // Which helper functions would help simplify the play() function?
@@ -243,6 +264,8 @@ int main(int argc, char *argv[]) {
   //Game addPlayer(player0 player0); 
   Game g(pointnumber, player0name, player1name, player2name, player3name, player0type, player1type, player2type, player3type); 
   g.deal(); 
+  g.make_trump(); 
+  
   
 
 }
