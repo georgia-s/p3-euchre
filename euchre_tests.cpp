@@ -7,6 +7,7 @@
 #include "Pack.h"
 #include "Card.h"
 #include <vector>
+#include "unit_test_framework.h"
 using namespace std;
 
 // INSERT Ten of Diamonds
@@ -373,3 +374,6 @@ TEST(test_human_player_make_trump_six) {
 
   delete bob;
 }
+
+TEST_MAIN()
+
