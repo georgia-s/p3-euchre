@@ -35,7 +35,7 @@ TEST(test_simple_player_play_card_one) {
     delete bob;
 }
 
-//TEST SIMPLE PLAYER PLAY CARD, has no led suit
+//TEST SIMPLE PLAYER PLAY CARD, left bower is led suit
 TEST(test_simple_player_play_card_two) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -385,7 +385,6 @@ TEST(test_simple_player_lead_card_two) {
 }
 
 
-// INSERT Ace of Spades
 // play highest trump card (all trump cards)
 TEST(test_simple_player_lead_card_three) {
     // Bob's hand

@@ -116,7 +116,8 @@ public:
         Card max = simple_hand[0];
         int start = 0;
 
-        while (simple_hand[start].get_suit() == trump && start != simple_hand.size()) {
+        while (simple_hand[start].get_suit() == trump
+               && start != simple_hand.size()) {
             start++;
         }
         
@@ -151,7 +152,8 @@ public:
         
         if (trump_count < simple_hand.size()) {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i] > max) && (left_bower_present == false) && (simple_hand[i].get_suit() != trump)) {
+                if ((simple_hand[i] > max) && (left_bower_present == false)
+                    && (simple_hand[i].get_suit() != trump)) {
                     max = simple_hand[i];
                 }
                 if (left_bower_present == true) {
