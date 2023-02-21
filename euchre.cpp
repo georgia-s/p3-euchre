@@ -73,26 +73,12 @@ using namespace std;
 class Game {
 public:
   // NON-DEFAULT CSTOR
-  Game(int number, string player0name, string player1name, string player2name, string player3name, string player0type, string player1type, string player2type, string player3type) {
-    points_to_win = number; 
-    name0 = player0name; 
-    name1 = player1name;
-    name2 = player2name;
-    name3 = player3name;
-    name0_type = player0type;
-    name1_type = player1type;
-    name2_type = player2type; 
-    name3_type = player3type; 
-    Player * player0 = Player_factory(player0name, player0type);
-  Player * player1 = Player_factory(player1name, player1type);
-  Player * player2 = Player_factory(player2name, player2type);
-  Player * player3 = Player_factory(player3name, player3type);
-  addPlayer(player0); 
-  addPlayer(player1); 
-  addPlayer(player2); 
-   addPlayer(player3); 
- 
-
+  Game(int pointnumber, string player0name, string player1name, string player2name, string player3name, string player0type, string player1type, string player2type, string player3type) {
+  points_to_win = pointnumber;  
+  addPlayer(Player_factory(player0name, player0type)); 
+  addPlayer(Player_factory(player1name, player1type)); 
+  addPlayer(Player_factory(player2name, player2type)); 
+  addPlayer(Player_factory(player3name, player3type)); 
   }
 
   // DEFAULT CSTOR
@@ -101,44 +87,44 @@ public:
   const int MIN_POINTS_TO_WIN = 1;
   void deal(){
   //deals three cards to player 0
-  Players[0]->add_card(pack.deal_one());
-  Players[0]->add_card(pack.deal_one());
-  Players[0]->add_card(pack.deal_one());
-  //deals two cards to player 1
-  Players[1]->add_card(pack.deal_one());
-  Players[1]->add_card(pack.deal_one());
-  //deals three cards to player 2
-  Players[2]->add_card(pack.deal_one());
-  Players[2]->add_card(pack.deal_one());
-  Players[2]->add_card(pack.deal_one());
-  //deals two cards to player 3
-  Players[3]->add_card(pack.deal_one());
-  Players[3]->add_card(pack.deal_one());
-  //deals two cards to player 0
-  Players[0]->add_card(pack.deal_one());
-  Players[0]->add_card(pack.deal_one());
-  //deals three cards to player 1
-  Players[1]->add_card(pack.deal_one());
-  Players[1]->add_card(pack.deal_one());
-  Players[1]->add_card(pack.deal_one());
-  //deals two cards to player 2
-  Players[2]->add_card(pack.deal_one());
-  Players[2]->add_card(pack.deal_one());
-  //deals three cards to player 3
-  Players[3]->add_card(pack.deal_one());
-  Players[3]->add_card(pack.deal_one());
-  Players[3]->add_card(pack.deal_one());
-  Card upcard = pack.deal_one();   
-  cout << "Hand " << hand << endl;
-  cout << Players[dealer]->get_name() << " deals" << endl;
-  cout << upcard << " turned up" << endl;
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    //deals two cards to player 1
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    //deals three cards to player 2
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    //deals two cards to player 3
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    //deals two cards to player 0
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    //deals three cards to player 1
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    //deals two cards to player 2
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    //deals three cards to player 3
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    Card upcard = pack.deal_one();   
+    cout << "Hand " << hand << endl;
+    cout << Players[dealer]->get_name() << " deals" << endl;
+    cout << upcard << " turned up" << endl;
 }
   void updateHand() {
-  ++hand;
-}
+    ++hand;
+  }
   void addPlayer(Player* player) {
     Players.push_back(player);
-}
+  }
   
   void updateDealer() {
     if (dealer < 4) {
@@ -151,14 +137,17 @@ public:
   void shuffle () {
     pack.shuffle(); 
   }
+  
   void errorMessage() {
   cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
          << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
          << "NAME4 TYPE4" << endl;
   } 
+
   void make_trump() {
+    
     cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
-  string answer;
+    string answer;
   }
   //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES 
   void set_points_to_win(int number){
@@ -196,25 +185,15 @@ private:
   // void deal(/* ... */);
   // void make_trump(/* ... */);
   // void play_hand(/* ... */);
-  std::vector<Player*> Players;
-    Pack pack;
-    int dealer;
-    int hand;
-    string name0;
-    string name1;
-    string name2;
-    string name3;
-    string name0_type;
-    string name1_type;
-    string name2_type;
-    string name3_type;
-    string pack;
-    string shuffle;
-int teamOneScore = 0;
-int teamTwoScore = 0;
-string points_to_win = 0; 
-//vector<string> players;
-
+  vector<Player*> Players;
+  Pack pack;
+  int dealer;
+  int hand;
+  string pack;
+  string shuffle;
+  int teamOneScore = 0;
+  int teamTwoScore = 0;
+  string points_to_win = 0; 
 };
 
 
@@ -258,28 +237,17 @@ int main(int argc, char *argv[]) {
   string player2type = argv[9];   
   string player3name = argv[10]; 
   string player3type = argv[11];   
-  int number = atoi(argv[3]); 
+  int pointnumber = atoi(argv[3]); 
   //Player * player0 = Player_factory(player0name, player0type);
 
   //Game addPlayer(player0 player0); 
-  Game g; 
+  Game g(pointnumber, player0name, player1name, player2name, player3name, player0type, player1type, player2type, player3type); 
   g.deal(); 
+  
 
-
-
-
+}
 /*
-STEP 1- READ IN INPUT & VALIDATE IT 
-- To compile and run a Euchre game with four players.
-- make euchre.exe
-- ./euchre.exe pack.in noshuffle 1 Adi Simple
-- Barbara Simple Chi-Chih Simple Dabbala Simple
--  Assume pack_filename is a variable
--  containing the specified pack filename from argv
-- get stream
--- 
-2. INITIALIZE NAMES, POINTS TO WIN, ETC. 
-  + Check if human name or simple name to decide which function to call
+e or simple name to decide which function to call
 STEP 2-  DEALS CARDS
 STEP 3- ANNOUNCE HAND 
   + At the beginning of each hand, announce the hand,
