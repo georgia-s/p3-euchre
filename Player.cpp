@@ -148,7 +148,7 @@ public:
         Card max = simple_hand[0];
         int count = 0;
         // makes sure that left bower isn't set to lowest
-        while (simple_hand[count].is_left_bower(led_card.get_suit())) {
+        while(simple_hand[count].is_left_bower(led_card.get_suit())) {
             count++;
         }
         Card min = simple_hand[count];
