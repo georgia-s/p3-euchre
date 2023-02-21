@@ -43,11 +43,14 @@ public:
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
         int ace_or_face_same_as_other_color = 0;
-        
+    
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
                 && simple_hand[i].is_face_or_ace()) {
+                    ace_or_face_same_as_trump_count++;
+                }
+                if (simple_hand[i].is_left_bower(trump_suit)) {
                     ace_or_face_same_as_trump_count++;
                 }
             }
@@ -72,7 +75,11 @@ public:
                     ace_or_face_same_as_trump_count++;
                 }
                 if (simple_hand[i].get_suit() == other_color
-                    && simple_hand[i].is_face_or_ace()) {
+                     && simple_hand[i].is_left_bower(trump_suit)) {
+                    ace_or_face_same_as_trump_count++;
+                }
+                if (simple_hand[i].get_suit() == other_color
+                    && simple_hand[i].is_face_or_ace() && !simple_hand[i].is_left_bower(trump_suit)) {
                     ace_or_face_same_as_other_color++;
                 }
             }
@@ -116,10 +123,14 @@ public:
         Card max = simple_hand[0];
         int start = 0;
 
-        while (simple_hand[start].get_suit() == trump && start != simple_hand.size()) {
+         // sees how many trump cards there are before reaching
+         // a non trump card
+        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump)) && start != simple_hand.size()) {
             start++;
         }
         
+         // if there is a mix of trump and non trump cards
+         // sets max equal to first non trump card
         if (start != 0 && start != simple_hand.size()) {
             max = simple_hand[start];
         }
@@ -130,6 +141,7 @@ public:
         Card right_bower;
         Card left_bower;
         
+         //finds out of there is a left and/or right bower present
         for (int i = 0; i < simple_hand.size(); i++) {
             if (simple_hand[i].is_left_bower(trump)) {
                 left_bower_present = true;
@@ -141,34 +153,42 @@ public:
             }
         }
         
+        //counts total trump cards
         int trump_count = 0;
-        
         for (int i = 0; i < simple_hand.size(); i++) {
-            if (simple_hand[i].get_suit() == trump) {
+            if (simple_hand[i].get_suit() == trump
+                || simple_hand[i].is_left_bower(trump)) {
                 trump_count++;
             }
         }
-        
+         
+        // if not all trump cards
+        // max is greatest of non trump cards
+        // excludes left bower bc its cosidered trump card
         if (trump_count < simple_hand.size()) {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i] > max) && (left_bower_present == false) && (simple_hand[i].get_suit() != trump)) {
+                if ((simple_hand[i] > max) && (!simple_hand[i].is_left_bower(trump))
+                    && (simple_hand[i].get_suit() != trump)) {
                     max = simple_hand[i];
-                }
-                if (left_bower_present == true) {
-                    max = left_bower;
                 }
             }
         }
-        
+        // if all trump cards, play highest trump
+         // right bower is highest, then left 
         if (trump_count >= simple_hand.size()) {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if(((start == simple_hand.size()))
-                   && (simple_hand[i] > max) && (right_bower_present == false)) {
-                    max = simple_hand[i];
-                }
                 if (right_bower_present == true) {
                     max = right_bower;
                 }
+                if (left_bower_present == true && right_bower_present == false) {
+                    max = left_bower;
+                }
+                if(((start == simple_hand.size()))
+                   && (simple_hand[i] > max) && (right_bower_present == false)
+                   && (left_bower_present == false)) {
+                    max = simple_hand[i];
+                }
+                
             }
         }
         return max;
@@ -181,6 +201,7 @@ public:
     Card play_card(const Card &led_card, Suit trump){
         Card max = simple_hand[0];
         int count = 0;
+       
         // makes sure that left bower isn't set to lowest
         while(simple_hand[count].is_left_bower(led_card.get_suit())) {
             count++;
@@ -198,6 +219,8 @@ public:
         }
 
         bool right_bower_present = false;
+        bool left_bower_present = false;
+        
         // can follow suit, so plays highest
         if (same_suit == true){
             for (int i = 0; i < simple_hand.size(); i++) {
@@ -205,11 +228,16 @@ public:
                     max = simple_hand[i];
                     right_bower_present = true;
                 }
+                if(simple_hand[i].is_left_bower(led_card.get_suit())
+                   && right_bower_present == false) {
+                    max = simple_hand[i];
+                    left_bower_present = true;
+                }
                 
-                if (simple_hand[i].get_suit() == led_card.get_suit() || simple_hand[i].is_left_bower(led_card.get_suit()) == true) {
-                    if (simple_hand[i] > max && right_bower_present == false) {
-                        max = simple_hand[i];
-                    }
+                if (simple_hand[i].get_suit() == led_card.get_suit()
+                    && simple_hand[i] > max && right_bower_present == false
+                    && left_bower_present == false) {
+                    max = simple_hand[i];
                 }
             }
             return max;
