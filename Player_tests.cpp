@@ -292,7 +292,7 @@ TEST(test_simple_player_make_trump_two) {
 }
 
 
-// round 1, dealer. makes trump
+// round 1, dealer, makes trump
 TEST(test_simple_player_make_trump_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -372,7 +372,7 @@ TEST(test_simple_player_make_trump_five) {
   delete bob;
 }
 
-// round 2, not a dealer PASSED
+// round 2, not a dealer, makes trump
 TEST(test_simple_player_make_trump_six) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -398,7 +398,7 @@ TEST(test_simple_player_make_trump_six) {
 
   delete bob;
 }
-//ROUND 2, no same color in hand PASSED
+//round 2, screw the dealer
 TEST(test_simple_player_make_trump_seven) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -504,7 +504,34 @@ TEST(test_simple_player_make_trump_ten) {
   delete bob;
 }
 
-// play highest non trump card
+// round 2, not dealer, makes trump with right bower
+TEST(test_simple_player_make_trump_eleven) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(FOUR, DIAMONDS));
+    bob->add_card(Card(QUEEN, DIAMONDS));
+    bob->add_card(Card(JACK, CLUBS));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(QUEEN, HEARTS));
+    
+    // Bob doesn’t make trump
+    Card king_clubs(KING, CLUBS);
+    Suit trump = CLUBS;
+    bool orderup = bob->make_trump(
+    king_clubs,    // Upcard
+    false,           // Bob is not the dealer
+    2,              // round 1
+    trump           // Suit ordered up (if any)
+    );
+    
+    // Verify Bob's order up and trump suit
+    ASSERT_TRUE(orderup);
+    ASSERT_EQUAL(trump, CLUBS);
+
+  delete bob;
+}
+
+// all not trump, play highest non trump card
 TEST(test_simple_player_lead_card_one) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -527,7 +554,7 @@ TEST(test_simple_player_lead_card_one) {
     delete bob;
 }
 
-// play highest non trump card
+// mixed cards, plays highest non trump card
 TEST(test_simple_player_lead_card_two) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -551,7 +578,7 @@ TEST(test_simple_player_lead_card_two) {
 }
 
 
-// play highest trump card (all trump cards)
+//all trump cards, plays highest trump card
 TEST(test_simple_player_lead_card_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
