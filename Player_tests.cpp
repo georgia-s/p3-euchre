@@ -620,7 +620,125 @@ TEST(test_simple_player_lead_card_three) {
     delete bob;
 }
 
+// play highest non trump card (not left bower)
+TEST(test_simple_player_lead_card_four) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    // jack of diamonds is considered trump suit so not played
+    bob->add_card(Card(JACK, DIAMONDS));
+    bob->add_card(Card(NINE, SPADES));
+    bob->add_card(Card(NINE, CLUBS));
+    // jack of clubs is highest none trump
+    bob->add_card(Card(JACK, CLUBS));
+    bob->add_card(Card(JACK, SPADES));
 
+    // Bob adds a card to his hand and discards one card
+    bob->add_and_discard(Card(NINE, HEARTS));
+
+    // Bob leads
+    Card card_led = bob->lead_card(HEARTS);
+
+    // Verify the card Bob selected to lead
+    Card jack_clubs(JACK, CLUBS);
+    ASSERT_EQUAL(card_led, jack_clubs); //check led card
+
+    delete bob;
+}
+
+
+// play highest non trump card (left bower first)
+TEST(test_simple_player_lead_card_five) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(JACK, SPADES));
+    bob->add_card(Card(QUEEN, CLUBS));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(QUEEN, HEARTS));
+    bob->add_card(Card(KING, CLUBS));
+
+    // Bob adds a card to his hand and discards one card
+    bob->add_and_discard(Card(ACE, CLUBS));
+
+    // Bob leads
+    Card card_led = bob->lead_card(CLUBS);
+
+    // Verify the card Bob selected to lead
+    Card queen_hearts(QUEEN, HEARTS);
+    ASSERT_EQUAL(card_led, queen_hearts); //check led card
+
+    delete bob;
+}
+
+// play highest non trump card (right and left bower present)
+TEST(test_simple_player_lead_card_six) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(JACK, SPADES));
+    bob->add_card(Card(QUEEN, CLUBS));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(QUEEN, HEARTS));
+    bob->add_card(Card(JACK, CLUBS));
+
+    // Bob adds a card to his hand and discards one card
+    bob->add_and_discard(Card(ACE, CLUBS));
+
+    // Bob leads
+    Card card_led = bob->lead_card(CLUBS);
+
+    // Verify the card Bob selected to lead
+    Card queen_hearts(QUEEN, HEARTS);
+    ASSERT_EQUAL(card_led, queen_hearts); //check led card
+
+    delete bob;
+}
+
+// all trump cards so play highest trump
+// left and right bowers present
+TEST(test_simple_player_lead_card_seven) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(QUEEN, HEARTS));
+    bob->add_card(Card(JACK, HEARTS));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(JACK, DIAMONDS));
+    bob->add_card(Card(KING, HEARTS));
+
+    // Bob adds a card to his hand and discards one card
+    bob->add_and_discard(Card(ACE, HEARTS));
+
+    // Bob leads
+    Card card_led = bob->lead_card(HEARTS);
+
+    // Verify the card Bob selected to lead
+    Card jack_hearts(JACK, HEARTS);
+    ASSERT_EQUAL(card_led, jack_hearts); //check led card
+
+    delete bob;
+}
+
+// all trump cards so play highest trump
+// left bower present
+TEST(test_simple_player_lead_card_eight) {
+    // Bob's hand
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(QUEEN, HEARTS));
+    bob->add_card(Card(NINE, HEARTS));
+    bob->add_card(Card(TEN, HEARTS));
+    bob->add_card(Card(JACK, DIAMONDS));
+    bob->add_card(Card(KING, HEARTS));
+
+    // Bob adds a card to his hand and discards one card
+    bob->add_and_discard(Card(ACE, HEARTS));
+
+    // Bob leads
+    Card card_led = bob->lead_card(HEARTS);
+
+    // Verify the card Bob selected to lead
+    Card jack_diamonds(JACK, DIAMONDS);
+    ASSERT_EQUAL(card_led, jack_diamonds); //check led card
+
+    delete bob;
+}
 
 TEST_MAIN()
 
