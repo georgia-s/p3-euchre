@@ -115,10 +115,10 @@ public:
     Card lead_card(Suit trump) {
         Card max = simple_hand[0];
         int start = 0;
-        while (simple_hand[start].get_suit() == trump && start != simple_hand.size()) {
+        while (simple_hand[start].get_suit() == trump) {
             start++;
         }
-        if (start != 0 && start != simple_hand.size()) {
+        if (start != 0) {
             max = simple_hand[start];
         }
         int trump_count = 0;
@@ -135,7 +135,7 @@ public:
         for (int i = 0; i < simple_hand.size(); i++) {
          if(((trump_count == 0) && (start == simple_hand.size())) 
             && (simple_hand[i] > max)) {
-             max = simple_hand[i];
+            simple_hand[i] = max;
         }
     }
     return max;
@@ -190,7 +190,7 @@ public:
         std::vector <Card> simple_hand;
         std::string simple_name;
 };
-    
+    //HUMAN PLAYER
 class HumanPlayer : public Player {
 public:
     // default constructor
@@ -250,7 +250,7 @@ public:
         add_card(upcard);
     }
     
-    // need to do
+    
     Card lead_card(Suit trump) {
         for (size_t i=0; i < human_hand.size(); ++i) {
             std::cout << "Human player " << human_name << "'s hand: "

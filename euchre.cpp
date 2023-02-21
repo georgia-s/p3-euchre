@@ -1,8 +1,11 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 #include <iostream>
+#include <fstream>
 #include <array>
 #include <string>
 #include "Player.h"
+#include "Pack.h"
+#include "Card.h"
 #include <vector>
 using namespace std;
 
@@ -17,6 +20,7 @@ using namespace std;
 /*
 //**LOGIC & VARIABLES NEEDED**
 1. NEED A WAY TO KEEP SCORE
+
 2. NEED A WAY TO TRACK THE CURRENT DEALER
   - int dealer_posistion = 0;
   - increments dealer each round, when you get to player 3, use moduolo
@@ -66,61 +70,105 @@ using namespace std;
 */
 class Game {
 public:
-const int MAX_POINTS_TO_WIN= 100;
-const int MIN_POINTS_TO_WIN = 1;
-void errorMessage() {
+  // NON-DEFAULT CSTOR
+  Game(int number, string name_1) {
+    points_to_win = number; 
+    name1 = name_1; 
+  }
+ 
+  // DEFAULT CSTOR
+  Game() {
+  }
+  const int MAX_POINTS_TO_WIN= 100;
+  const int MIN_POINTS_TO_WIN = 1;
+  void deal(){
+  //deals three cards to player 0
+  Players[0]->add_card(pack.deal_one());
+  Players[0]->add_card(pack.deal_one());
+  Players[0]->add_card(pack.deal_one());
+  //deals two cards to player 1
+  Players[1]->add_card(pack.deal_one());
+  Players[1]->add_card(pack.deal_one());
+  //deals three cards to player 2
+  Players[2]->add_card(pack.deal_one());
+  Players[2]->add_card(pack.deal_one());
+  Players[2]->add_card(pack.deal_one());
+  //deals two cards to player 3
+  Players[3]->add_card(pack.deal_one());
+  Players[3]->add_card(pack.deal_one());
+  //deals two cards to player 0
+  Players[0]->add_card(pack.deal_one());
+  Players[0]->add_card(pack.deal_one());
+  //deals three cards to player 1
+  Players[1]->add_card(pack.deal_one());
+  Players[1]->add_card(pack.deal_one());
+  Players[1]->add_card(pack.deal_one());
+  //deals two cards to player 2
+  Players[2]->add_card(pack.deal_one());
+  Players[2]->add_card(pack.deal_one());
+  //deals three cards to player 3
+  Players[3]->add_card(pack.deal_one());
+  Players[3]->add_card(pack.deal_one());
+  Players[3]->add_card(pack.deal_one());
+  Card upcard = pack.deal_one();   
+  cout << "Hand " << hand << endl;
+  cout << Players[dealer].get_name() << " deals" << endl;
+  cout << upcard << " turned up" << endl;
+}
+  void updateHand() {
+  ++hand;
+}
+  void addPlayer(Player* Players) {
+  Players-->push_back(Players);
+}
+  void updateDealer() {
+  if (dealer < 4) {
+    dealer = dealer + 1;
+  }
+   else if (dealer == 4) {
+    dealer = 0;
+  }
+}
+  void shuffle () {
+  Pack shuffle(); 
+}
+  void errorMessage() {
   cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
          << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
          << "NAME4 TYPE4" << endl;
 }
-void Player_init (string name, string name_type) {
-  if (name_type == "Simple") {
-    Player.get_name(); 
-  }
 
-}
-//GAME IS WON BOolL
-bool gameWon (Game points_to_win, Game teamOneScore, Game teamTwoScore) {
-  if ((teamOneScore == points_to_win) ||(teamTwoScore == points_to_win)){
-    return true;
-  }
-  else {
-    return false; 
-  }
-}
 //CHECK IF PLAYER IS SIMPLE OR HUMAN USING PLAYER FACTORY
 
 
-  // constructer
-  Game(/* game details */);
-  // void play();
 
-    
   
   void make_trump() {
     cout << "Would you like to make trump? " << endl << "Please enter yes/no"; 
 string answer;
   }
   //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES 
-  int get_score(int team) {
-    if (team == 1) {
+  void set_points_to_win(int number){
+    points_to_win = number; 
+  }
+  int get_team1_score() {
       return teamOneScore;
-    }
-    else if (team == 2) {
-      return teamTwoScore; 
-    }
+  }
+  int get_team2_score() {
+      return teamTwoScore;
   }
   int get_dealer_posistion(int dealer_posistion) {
     return dealer_posistion; 
   }
-  istream & operator>>(istream &is) {
+ 
 
-  while (is) {
+ /* while (is) {
  is >> pack >> shuffle >> points_to_win >> name1 >> name1_type >>
         name2 >> name2_type >> name3 >> name3_type >> name4 >> name4_type;
   }
   return is; 
 }
+*/
 
 
 private: 
@@ -134,6 +182,10 @@ private:
   // void deal(/* ... */);
   // void make_trump(/* ... */);
   // void play_hand(/* ... */);
+  std::vector<Player*> Players;
+    Pack pack;
+    int dealer;
+    int hand;
     string name1;
     string name2;
     string name3;
@@ -149,50 +201,44 @@ int teamTwoScore = 0;
 string points_to_win = 0; 
 vector<string> players;
 
-//DEAL FUNCTION
-void Deal {
-  for (int i = 0; i < pack.size(); i++){
-//CALL IN ADD CARD  from player.cpp
-  }
+};
 
-}
-//READS IN USER INPUT
-
-//OUTS INPUT
-ostream & operator<<(ostream &os){
-
-
-}
 
 // It should have a constructor that takes in details like the players,
 // points to win, etc. and a public play() function.
 // DEFAULT CONSTRUCTOR
-Game::Game()
-{
-  pointstowin = 0; 
-}
-// NON DEFAULT CONSTRUCTOR
-// Game::Game() {
-//  Player get_name();
 
-};
+
+// NON DEFAULT CONSTRUCTOR
+
 
 int main(int argc, char *argv[]) {
+  
   /*PRINT ERROR MESSAGE IF: 
   - If user does not put 12 arguments in to terminal, print error message
   - If points to win is not within range
   - if argument 3 is not the string shuffle or no shuffle 
   - if argument 5,7,9,11 are not player types 
   */
-string shufflestring = argv[2];  
-if ((argc != 12) || ((atoi(argv[3]) < 1) || (atoi(argv[3]) > 100)) || (((shufflestring != "shuffle")) || (argv[2] != "noshuffle" ))){
+  string shufflestring = argv[2];  
+  if ((argc != 12) || ((atoi(argv[3]) < 1) || (atoi(argv[3]) > 100)) || (((shufflestring != "shuffle")) || (argv[2] != "noshuffle" ))){
   Game errorMessage(); 
   return 1; 
-}
-if ((argv[5] || argv[7] || argv[9] || argv [11]) != ("Simple" || "Human")) {
-  Game errorMessage(); 
-  return 1; 
-}
+  }
+  if ((argv[5] || argv[7] || argv[9] || argv [11]) != ("Simple" || "Human")) {
+    Game errorMessage(); 
+    return 1; 
+  }
+
+  ifstream is(argv[1]);
+  if (!is.isopen()) {
+     string pack_filename = argv[1] =
+    std::cout << "Error opening " << pack_filename << endl;
+  }
+  //set argument 3 to points to win private variable
+
+  }
+
 
 
 /*
@@ -204,7 +250,7 @@ STEP 1- READ IN INPUT & VALIDATE IT
 -  Assume pack_filename is a variable
 -  containing the specified pack filename from argv
 - get stream
--- cout << "Error opening " << ///pack_filename << endl;
+-- 
 2. INITIALIZE NAMES, POINTS TO WIN, ETC. 
   + Check if human name or simple name to decide which function to call
 STEP 2-  DEALS CARDS
@@ -233,7 +279,6 @@ STEP 7 - GAME IS OVER
   + At the end of a game, delete the Player objects created by the Player_factory.
 */
 
-} 
 
 
 // SCORING
