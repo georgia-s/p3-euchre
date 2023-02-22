@@ -24,14 +24,12 @@ public:
     Players.push_back(player2);
     Players.push_back(player3);
   }
-
-   void print_score() {
-        cout << *Players[0] << " and " << *Players[2]
-        << " have " << teamOneScore << "points" << endl;
-        cout << *Players[1] << " and " << *Players[3]
+  void print_score() {
+    cout << *Players[0] << " and " << *Players[2]
+      << " have " << teamOneScore << "points" << endl;
+    cout << *Players[1] << " and " << *Players[3]
         << " have " << teamTwoScore << "points" << endl;
-    }
-    
+  }   
   void print_win(int set_points_to_win) {
       if (teamOneScore >= set_points_to_win) {
         cout << *Players[0] << " and " << *Players[2] << " win!" << endl;
@@ -40,61 +38,57 @@ public:
         cout << *Players[1] << " and " << *Players[3] << " win!" << endl;    
       }
    }
-    
-    
-    void deal(){
-      //deals three cards to player 0
-        Players[0]->add_card(pack.deal_one());
-        Players[0]->add_card(pack.deal_one());
-        Players[0]->add_card(pack.deal_one());
-        //deals two cards to player 1
-        Players[1]->add_card(pack.deal_one());
-        Players[1]->add_card(pack.deal_one());
-        //deals three cards to player 2
-        Players[2]->add_card(pack.deal_one());
-        Players[2]->add_card(pack.deal_one());
-        Players[2]->add_card(pack.deal_one());
-        //deals two cards to player 3
-        Players[3]->add_card(pack.deal_one());
-        Players[3]->add_card(pack.deal_one());
-        //deals two cards to player 0
-        Players[0]->add_card(pack.deal_one());
-        Players[0]->add_card(pack.deal_one());
-        //deals three cards to player 1
-        Players[1]->add_card(pack.deal_one());
-        Players[1]->add_card(pack.deal_one());
-        Players[1]->add_card(pack.deal_one());
-        //deals two cards to player 2
-        Players[2]->add_card(pack.deal_one());
-        Players[2]->add_card(pack.deal_one());
-        //deals three cards to player 3
-        Players[3]->add_card(pack.deal_one());
-        Players[3]->add_card(pack.deal_one());
-        Players[3]->add_card(pack.deal_one());
-        Card upcard = pack.deal_one();
-        cout << "Hand " << hand << endl;
-        cout << Players[dealer]->get_name() << " deals" << endl;
-        cout << upcard << " turned up" << endl;
-    }
- 
+  void deal(){
+    //deals three cards to player 0
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    //deals two cards to player 1
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    //deals three cards to player 2
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    //deals two cards to player 3
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    //deals two cards to player 0
+    Players[0]->add_card(pack.deal_one());
+    Players[0]->add_card(pack.deal_one());
+    //deals three cards to player 1
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    //deals two cards to player 2
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    //deals three cards to player 3
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    Card upcard = pack.deal_one();
+    cout << "Hand " << hand << endl;
+    cout << Players[dealer]->get_name() << " deals" << endl;
+    cout << upcard << " turned up" << endl;
+  }
   void updateHand() {
     ++hand;
   }
-    
-    void addPlayer(Player* player) {
-        Players.push_back(player);
-    }
+  void addPlayer(Player* player) {
+    Players.push_back(player);
+  }
   
-    void updateDealer() {
-        if (dealer < 4) {
-            dealer = dealer + 1;
-        }
-        else if (dealer == 4) {
-            dealer = 0;
-        }
+  void updateDealer() {
+    if (dealer < 4) {
+      dealer = dealer + 1;
     }
+    else if (dealer == 4) {
+      dealer = 0;
+     }
+  }
  
-    void shufflePack () {
+  void shufflePack () {
         pack.shuffle();
     }
   
@@ -106,23 +100,24 @@ public:
     }
 
 
-    void make_trump() {
-       bool trump_made = false;
-       while (trump_made == false && count < 4) {
-           trump_made = Players[count]->make_trump(upcard, is_dealer(), round, order_up_suit);
+  void make_trump() {
+    bool trump_made = false;
+    while (trump_made == false && count < 4) {
+      trump_made = Players[count]->make_trump(upcard, is_dealer(), round, order_up_suit);
            if (trump_made == false) {
                count++;
            }
        }
+       upcardplayer = count; 
        updateRound();
   }
-  void pointIncrementer(int playernumber) {
+  void trickIncrementer(int playernumber) {
     if(playernumber == 0 || playernumber == 2) {
-      teamOneScore++; 
+      
       trickteam1++; 
     }
     if(playernumber == 2 || playernumber == 3) {
-      teamTwoScore++; 
+     
       trickteam2++; 
     }
     //increment team 1 score
@@ -130,34 +125,113 @@ public:
 
   }
 
- 
+  void pointIncrementer(int playernumber) {
+    if(playernumber == 0 || playernumber == 2) {
+      
+      teamOneScore++; 
+    }
+    if(playernumber == 2 || playernumber == 3) {
+     
+      teamTwoScore++; 
+    }
+    //increment team 1 score
+    //increment team 2 score 
+
+  }
+
+  void scoring(int winner){
+    
+      if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == true)) 
+ ||       ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == false))) {
+        if((trickteam1 == 3 || trickteam1 == 4) || (trickteam2 == 3 || trickteam2 == 4)){
+          pointIncrementer(winner);
+        }
+        else {
+          pointIncrementer(winner);
+          pointIncrementer(winner);
+          printMarch(); 
+        }
+        
+ }
+ else if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == false)) 
+ || ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == true))) {
+  pointIncrementer(winner);
+  pointIncrementer(winner);
+  printeuchre();
+ }
+
+ }
   void play() {
+    if (round == 1) {
+      setLeader(playernumber);
+    }
   //pass in a trump suit
-    void setLeader();
-    while (trickteam1 + trickteam2 <= 5) {
+    while (teamOneScore + teamTwoScore >= points_to_win){
       Players[leader]->lead_card(order_up_suit);       
       Card a = Players[(leader + 1) % 4]->play_card(upcard,order_up_suit);
       Card b = Players[(leader + 2) % 4]->play_card(upcard,order_up_suit);
       Card c = Players[(leader + 3) % 4]->play_card(upcard,order_up_suit);
       if (Card_less(a,b,ledcard,order_up_suit) == true && Card_less(c,b,ledcard,order_up_suit) == true) {
-        pointIncrementer(playernumber);
-        leader++;
+        trickIncrementer(playernumber);
+         setLeader(playernumber);
+         scoring(playernumber);
+         round++; 
+        
+        //Card b wins
             //Player b wins trick   
+            //set winner to next leader
       }
           //card a wins
       else if (Card_less(b,a,ledcard,order_up_suit) == true && Card_less(c,a,ledcard,order_up_suit) == true) {
         //players i and i+2 get a score
-        pointIncrementer(playernumber);
+        //pointIncrementer(playernumber);
+        trickIncrementer(playernumber);
+        setLeader(playernumber);
+        scoring(playernumber);
+        round++; 
           //card a wins trick
-          leader++;
+          
       }
       else {
-        pointIncrementer(playernumber);
+        //pointIncrementer(playernumber);
+        trickIncrementer(playernumber);
+         setLeader(playernumber);
+         scoring(playernumber);
+         round++; 
         //card c wins trick 
       }
     }
 }
-bool isMarch(){
+//HELPER FUNCTIONS 
+bool team_one_ordered_up(int playernum){
+  Players[upcardplayer];
+  if (isTeam1(playernum)) {
+    return true; 
+  }
+  else {
+    return false; 
+  }
+  
+}
+bool isTeam1(int playernum) {
+  if ((Players[playernum] == Players[0]) || (Players[playernum] == Players[2])){
+    return true; 
+  }
+  else {
+    return false;
+  }
+
+}
+bool team_1_wins() {
+  if ((isTeam1(playernumber) == true) && (Players[playernumber] == Players[leader]))  {
+    return true;
+
+  }
+  else {
+    return false; 
+  }
+}
+/*bool isMarch(){
   if(trickteam1 || trickteam2 == 5) {
     isMarch() == true; 
   }
@@ -165,8 +239,10 @@ bool isMarch(){
     isMarch() == false; 
   }
 }
-void setLeader(){
+*/
+void setLeader(int plyrnumber){
   int counter = 0; 
+  if (round == 1) {
   while (is_dealer() == false) {
     counter++; 
   }
@@ -179,18 +255,22 @@ void setLeader(){
     if (dealernumber < 3) {
       leader = dealer + 1; 
     }
-}
- void printMarch(){
-  if (isMarch() == true) {
-    cout << "march!" << endl;
   }
+  else {
+    leader = plyrnumber; 
+  }
+}
+void printMarch(){
+    cout << "march!" << endl;
+ }
+ void printeuchre(){
+    cout << "euchred!" << endl;
  }
 void updateRound() {
   round = round + 1;
   count = 0; 
 }
- 
-  bool is_dealer(){
+bool is_dealer(){
     if (count == 0) {
       return true;
     } 
@@ -199,7 +279,7 @@ void updateRound() {
     }
   }
     
-    //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES
+//GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES
     
   void set_points_to_win(int number){
     points_to_win = number;
@@ -223,25 +303,27 @@ void updateRound() {
   }
 
 private:
-  int playernumber; 
-    Card upcard;
-    int dealernumber; 
-    Card ledcard; 
-    int round = 1;
-    Suit order_up_suit;
-    int count = 0;
-    vector<Card*> Table;
-    vector<Player*> Players;
-    Pack pack;
-    int dealer;
-    int hand;
-    int trickteam1; 
-    int trickteam2; 
-    int leader; 
-    string shuffle;
-    int teamOneScore = 0;
-    int teamTwoScore = 0;
-    string points_to_win;
+  int upcardplayer;
+  int playernumber = 0; 
+  Card upcard;
+  int dealernumber; 
+  Card ledcard; 
+  int round = 1;
+  Suit order_up_suit;
+  int count = 0;
+  vector<Card*> Table;
+  vector<Player*> Players;
+  Pack pack;
+  int dealer;
+  int hand;
+  int trickteam1; 
+  int trickteam2; 
+  int leader; 
+  string shuffle;
+  int teamOneScore = 0;
+  int teamTwoScore = 0;
+  int points_to_win;
+  //int ptstowin = stoi(points_to_win);
 };
 
 
@@ -286,7 +368,7 @@ int main(int argc, char *argv[]) {
         g.deal();
         g.make_trump();
         g.play();
-        g.printMarch();
+        
     }
 }
 
