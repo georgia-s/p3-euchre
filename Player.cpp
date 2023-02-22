@@ -8,9 +8,11 @@
 #include <string>
 #include <vector>
 #include "Player.h"
+#include <iostream>
 #include <algorithm>
 #include <cassert>
 #include <vector>
+using namespace std;
 
 class SimplePlayer : public Player {
 public:
@@ -125,8 +127,7 @@ public:
 
          // sees how many trump cards there are before reaching
          // a non trump card
-        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump))
-               && start != simple_hand.size()) {
+        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump)) && start != simple_hand.size()) {
             start++;
         }
         
@@ -168,8 +169,7 @@ public:
         // excludes left bower bc its cosidered trump card
         if (trump_count < simple_hand.size()) {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i] > max)
-                    && (!simple_hand[i].is_left_bower(trump))
+                if ((simple_hand[i] > max) && (!simple_hand[i].is_left_bower(trump))
                     && (simple_hand[i].get_suit() != trump)) {
                     max = simple_hand[i];
                 }
@@ -203,7 +203,6 @@ public:
     Card play_card(const Card &led_card, Suit trump){
         Card max = simple_hand[0];
         int count = 0;
-       
         // makes sure that left bower isn't set to lowest
         while(simple_hand[count].is_left_bower(led_card.get_suit())) {
             count++;
@@ -264,12 +263,10 @@ class HumanPlayer : public Player {
 public:
     // default constructor
     HumanPlayer(std::string name) : human_name(name) {}
-   
     //EFFECTS returns player's name
     const std::string & get_name() const{
         return human_name;
     }
-    
     void add_card(const Card &c){
         if (human_hand.size() < MAX_HAND_SIZE) {
             human_hand.push_back(c);
@@ -367,7 +364,7 @@ Player * Player_factory(const std::string &name,
     return nullptr;
 }
 //EFFECTS: Prints player's name to os
-std::ostream & operator<<(std::ostream &os,
+    ostream & operator<<(ostream &os,
                           const Player &p){
     os << p.get_name();
     return os;
