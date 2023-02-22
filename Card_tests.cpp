@@ -2,8 +2,7 @@
 
 #include "Card.h"
 #include "unit_test_framework.h"
-#include <iostream>
-
+#include <iostream> 
 using namespace std;
 
 TEST(test_card_ctor) {
