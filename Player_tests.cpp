@@ -34,11 +34,8 @@ TEST(test_simple_player_play_card_one) {
     delete bob;
 }
 
-<<<<<<< HEAD
 //TEST SIMPLE PLAYER PLAY CARD, has no led suit
-=======
 // left bower is only led suit present
->>>>>>> 85f815fc189921a1282af1fbefe80e76b50f5b75
 TEST(test_simple_player_play_card_two) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -104,11 +101,7 @@ TEST(test_simple_player_play_card_four) {
       delete bob;
     }
 
-<<<<<<< HEAD
-//TEST SIMPLE PLAYER PLAY CARD, none of led suit, right bower
-=======
 // left bower is only led suit present
->>>>>>> 85f815fc189921a1282af1fbefe80e76b50f5b75
 TEST(test_simple_player_play_card_five) {
       // Bob's hand
       Player * bob = Player_factory("Bob", "Simple");
@@ -126,12 +119,10 @@ TEST(test_simple_player_play_card_five) {
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(QUEEN, HEARTS));
+      ASSERT_EQUAL(card_played, Card(JACK, SPADES));
       delete bob;
     }
 
-<<<<<<< HEAD
-=======
 //all led suit + left bower present
 TEST(test_simple_player_play_card_six) {
       // Bob's hand
@@ -153,7 +144,6 @@ TEST(test_simple_player_play_card_six) {
       ASSERT_EQUAL(card_played, Card(JACK, HEARTS));
       delete bob;
     }
->>>>>>> 85f815fc189921a1282af1fbefe80e76b50f5b75
 
 
 //no led suits or bowers so plays lowest card
@@ -460,9 +450,7 @@ TEST(test_simple_player_make_trump_eight) {
   delete bob;
 }
 
-<<<<<<< HEAD
 // play highest non trump card
-=======
 // round 1, not dealer, makes trump with left bower
 TEST(test_simple_player_make_trump_nine) {
     // Bob's hand
@@ -545,7 +533,6 @@ TEST(test_simple_player_make_trump_eleven) {
 }
 
 // all not trump, play highest non trump card
->>>>>>> 85f815fc189921a1282af1fbefe80e76b50f5b75
 TEST(test_simple_player_lead_card_one) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
@@ -592,12 +579,9 @@ TEST(test_simple_player_lead_card_two) {
 }
 
 
-<<<<<<< HEAD
 // INSERT Ace of Spades
 // play highest trump card (all trump cards)
-=======
 //all trump cards, plays highest trump card
->>>>>>> 85f815fc189921a1282af1fbefe80e76b50f5b75
 TEST(test_simple_player_lead_card_three) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
