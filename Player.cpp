@@ -1,4 +1,4 @@
-// Project UID 1d9f47bfc76643019cfbf037641defe1
+/// Project UID 1d9f47bfc76643019cfbf037641defe1
 //  Player.cpp
 //  p3-euchre
 //
@@ -11,8 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cassert>
-#include <iostream>
-
+#include <vector>
 using namespace std;
 
 class SimplePlayer : public Player {
@@ -201,16 +200,8 @@ public:
                 
             }
         }
-         
-        
-         for (int i = 0; i < simple_hand.size(); i++) {
-             if (simple_hand[i] == max) {
-                 std::cout << max << " led by " << simple_name << std::endl;
-                 simple_hand.erase (simple_hand.begin() + i);
-                 return max;
-             }
-         }
-         return max;
+        std::cout << max << " led by " << simple_name << std::endl;
+        return max;
     }
     
     //REQUIRES Player has at least one card
@@ -258,14 +249,8 @@ public:
                     max = simple_hand[i];
                 }
             }
-            
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] == max) {
-                    std::cout << max << " played by " << simple_name << std::endl;
-                    simple_hand.erase (simple_hand.begin() + i);
-                    return max;
-                }
-            }
+            std::cout << max << " played by " << simple_name << std::endl;
+            return max;
         }
         // cant follow suit, so plays lowest
         else {
@@ -274,15 +259,9 @@ public:
                     min = simple_hand[i];
                 }
             }
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] == min) {
-                    std::cout << min << " led by " << simple_name << std::endl;
-                    simple_hand.erase (simple_hand.begin() + i);
-                    return min;
-                }
-            }
+            std::cout << min << " played by " << simple_name << std::endl;
+            return min;
         }
-        return min;
     }
     
     private:
