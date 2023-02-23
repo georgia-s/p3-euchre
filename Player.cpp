@@ -43,7 +43,6 @@ public:
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
-        int ace_or_face_same_as_other_color = 0;
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
@@ -68,12 +67,14 @@ public:
         }
 
         if (round == 2) {
+            
             if (is_dealer == true) {
                 order_up_suit = other_color;
                 std::cout << simple_name << " orders up "
                 << order_up_suit << std::endl << std::endl;
                 return true;
             }
+            
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
                      && simple_hand[i].is_face_or_ace()) {
@@ -85,19 +86,17 @@ public:
                 }
                 if (simple_hand[i].get_suit() == other_color
                     && simple_hand[i].is_face_or_ace() && !simple_hand[i].is_left_bower(trump_suit)) {
-                    ace_or_face_same_as_other_color++;
+                    ace_or_face_same_as_trump_count++;
                 }
             }
             if (ace_or_face_same_as_trump_count >= 1) {
-                order_up_suit = trump_suit;
+                order_up_suit = other_color;
                 std::cout << simple_name << " orders up "
                 << order_up_suit << std::endl << std::endl;
                 return true;
 
-            } else if (ace_or_face_same_as_other_color >= 1) {
-                order_up_suit = other_color;
-                    return true;
             }
+            
             else {
                 std::cout << simple_name << " passes" << std::endl;
                 return false;

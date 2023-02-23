@@ -477,7 +477,7 @@ TEST(test_simple_player_make_trump_ten) {
     
     // Verify Bob's order up and trump suit
     ASSERT_TRUE(orderup);
-    ASSERT_EQUAL(trump, CLUBS);
+    ASSERT_EQUAL(trump, SPADES);
 
   delete bob;
 }
@@ -504,7 +504,7 @@ TEST(test_simple_player_make_trump_eleven) {
     
     // Verify Bob's order up and trump suit
     ASSERT_TRUE(orderup);
-    ASSERT_EQUAL(trump, CLUBS);
+    ASSERT_EQUAL(trump, SPADES);
 
   delete bob;
 }
