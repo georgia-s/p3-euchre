@@ -492,13 +492,13 @@ TEST(test_simple_player_make_trump_eleven) {
     bob->add_card(Card(TEN, HEARTS));
     bob->add_card(Card(QUEEN, HEARTS));
     
-    // Bob doesn’t make trump
+    // Bob makes trump
     Card king_clubs(KING, CLUBS);
     Suit trump = CLUBS;
     bool orderup = bob->make_trump(
     king_clubs,    // Upcard
     false,           // Bob is not the dealer
-    2,              // round 1
+    2,              // round 2
     trump           // Suit ordered up (if any)
     );
     

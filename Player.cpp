@@ -57,9 +57,12 @@ public:
                     
             if (ace_or_face_same_as_trump_count >= 2) {
                 order_up_suit = trump_suit;
+                std::cout << simple_name << " orders up "
+                << order_up_suit << std::endl << std::endl;
                 return true;
             }
             else {
+                std::cout << simple_name << " passes" << std::endl;
                 return false;
             }
         }
@@ -67,6 +70,8 @@ public:
         if (round == 2) {
             if (is_dealer == true) {
                 order_up_suit = other_color;
+                std::cout << simple_name << " orders up "
+                << order_up_suit << std::endl << std::endl;
                 return true;
             }
             for (size_t i=0; i < simple_hand.size(); ++i) {
@@ -85,6 +90,8 @@ public:
             }
             if (ace_or_face_same_as_trump_count >= 1) {
                 order_up_suit = trump_suit;
+                std::cout << simple_name << " orders up "
+                << order_up_suit << std::endl << std::endl;
                 return true;
 
             } else if (ace_or_face_same_as_other_color >= 1) {
@@ -92,11 +99,13 @@ public:
                     return true;
             }
             else {
+                std::cout << simple_name << " passes" << std::endl;
                 return false;
             }
             
         }
-        return false;
+       std::cout << simple_name << " passes" << std::endl;
+       return false;
     }
     
     void add_and_discard(const Card &upcard) {
@@ -192,6 +201,7 @@ public:
                 
             }
         }
+        std::cout << max << " led by " << simple_name << std::endl;
         return max;
     }
     
@@ -240,6 +250,7 @@ public:
                     max = simple_hand[i];
                 }
             }
+            std::cout << max << " played by " << simple_name << std::endl;
             return max;
         }
         // cant follow suit, so plays lowest
@@ -249,6 +260,7 @@ public:
                     min = simple_hand[i];
                 }
             }
+            std::cout << min << " played by " << simple_name << std::endl;
             return min;
         }
     }
@@ -293,9 +305,12 @@ public:
         
         if (decision != "pass") {
             order_up_suit = string_to_suit(decision);
+            std::cout << human_name << " orders up "
+            << order_up_suit << std::endl << std::endl;
             return true;
         }
         else {
+            std::cout << human_name << " passes" << std::endl;
             return false;
         }
     }
@@ -328,6 +343,7 @@ public:
         Suit suit;
         std::cin >> rank >> junk >> suit;
         Card decision(rank, suit);
+        std::cout << decision << " led by " << human_name << std::endl;
         return decision;
     }
 
@@ -343,6 +359,7 @@ public:
         Suit suit;
         std::cin >> rank >> junk >> suit;
         Card decision(rank, suit);
+        std::cout << decision << " played by " << human_name << std::endl;
         return decision;
     }
     
