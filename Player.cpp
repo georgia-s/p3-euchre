@@ -11,7 +11,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cassert>
-#include <vector>
+#include <iostream>
+
 using namespace std;
 
 class SimplePlayer : public Player {
@@ -200,8 +201,16 @@ public:
                 
             }
         }
-        std::cout << max << " led by " << simple_name << std::endl;
-        return max;
+         
+        
+         for (int i = 0; i < simple_hand.size(); i++) {
+             if (simple_hand[i] == max) {
+                 std::cout << max << " led by " << simple_name << std::endl;
+                 simple_hand.erase (simple_hand.begin() + i);
+                 return max;
+             }
+         }
+         return max;
     }
     
     //REQUIRES Player has at least one card
@@ -249,8 +258,14 @@ public:
                     max = simple_hand[i];
                 }
             }
-            std::cout << max << " played by " << simple_name << std::endl;
-            return max;
+            
+            for (int i = 0; i < simple_hand.size(); i++) {
+                if (simple_hand[i] == max) {
+                    std::cout << max << " played by " << simple_name << std::endl;
+                    simple_hand.erase (simple_hand.begin() + i);
+                    return max;
+                }
+            }
         }
         // cant follow suit, so plays lowest
         else {
@@ -259,9 +274,15 @@ public:
                     min = simple_hand[i];
                 }
             }
-            std::cout << min << " played by " << simple_name << std::endl;
-            return min;
+            for (int i = 0; i < simple_hand.size(); i++) {
+                if (simple_hand[i] == min) {
+                    std::cout << min << " led by " << simple_name << std::endl;
+                    simple_hand.erase (simple_hand.begin() + i);
+                    return min;
+                }
+            }
         }
+        return min;
     }
     
     private:
