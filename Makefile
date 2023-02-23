@@ -66,7 +66,7 @@ FILES := \
   Pack_tests.cpp \
   Player.cpp \
   Player_tests.cpp \
-  euchre.cpp
+  euchre.cpp 
 style :
 	$(OCLINT) \
     -no-analytics \

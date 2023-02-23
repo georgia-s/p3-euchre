@@ -13,16 +13,18 @@ using namespace std;
 
 class Game {
 public:
-  Game() {}
-  void set_players(string player0name, string player0type, string player1name, string player1type, string player2name, string player2type, string player3name, string player3type) {
-    Player *player0 = Player_factory(player0name, player0type);
-    Player *player1 = Player_factory(player1name, player1type);
-    Player *player2 = Player_factory(player2name, player2type);
-    Player *player3 = Player_factory(player3name, player3type);
-    Players.push_back(player0);
+
+  Game(int number, string const arr[8]) {
+    Player *player0 = Player_factory(arr[0], arr[1]);
+    Player *player1 = Player_factory(arr[2], arr[3]);
+    Player *player2 = Player_factory(arr[4], arr[5]);
+    Player *player3 = Player_factory(arr[6], arr[7]);
+     Players.push_back(player0);
     Players.push_back(player1);
     Players.push_back(player2);
     Players.push_back(player3);
+    checkpointstowin(number); 
+    points_to_win = number;
   }
   void print_score() {
     cout << *Players[0] << " and " << *Players[2]
@@ -78,7 +80,6 @@ public:
   void addPlayer(Player* player) {
     Players.push_back(player);
   }
-  
   void updateDealer() {
     if (dealer < 4) {
       dealer = dealer + 1;
@@ -87,23 +88,14 @@ public:
       dealer = 0;
      }
   }
- 
   void shufflePack () {
-        pack.shuffle();
-    }
-  
- 
-    void errorMessage() {
-        cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
-         << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
-         << "NAME4 TYPE4" << endl;
-    }
-
-
+    pack.shuffle();
+  }
   void make_trump() {
     bool trump_made = false;
     while (trump_made == false && count < 4) {
-      trump_made = Players[count]->make_trump(upcard, is_dealer(), round, order_up_suit);
+      trump_made = Players[count]->make_trump(upcard, is_dealer(),
+       round, order_up_suit);
            if (trump_made == false) {
                count++;
            }
@@ -120,12 +112,11 @@ public:
      
       trickteam2++; 
     }
-    //increment team 1 score
-    //increment team 2 score 
+
 
   }
 
-  void pointIncrementer(int playernumber) {
+void pointIncrementer(int playernumber) {
     if(playernumber == 0 || playernumber == 2) {
       
       teamOneScore++; 
@@ -139,11 +130,14 @@ public:
 
   }
 
-  void scoring(int winner){
+void scoring(int winner){
     
-      if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == true)) 
- ||       ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == false))) {
-        if((trickteam1 == 3 || trickteam1 == 4) || (trickteam2 == 3 || trickteam2 == 4)){
+      if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) 
+      && (team_one_ordered_up(winner) == true)) 
+ ||       ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) 
+ && (team_one_ordered_up(winner) == false))) {
+        if((trickteam1 == 3 || trickteam1 == 4) || (trickteam2 == 3
+         || trickteam2 == 4)){
           pointIncrementer(winner);
         }
         else {
@@ -153,15 +147,17 @@ public:
         }
         
  }
- else if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == false)) 
- || ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) && (team_one_ordered_up(winner) == true))) {
+ else if (((trickteam1 > trickteam2) && (trickteam1 + trickteam2 == 5) 
+ && (team_one_ordered_up(winner) == false)) 
+ || ((trickteam1 < trickteam2) && (trickteam1 + trickteam2 == 5) 
+ && (team_one_ordered_up(winner) == true))) {
   pointIncrementer(winner);
   pointIncrementer(winner);
   printeuchre();
  }
 
  }
-  void play() {
+void play() {
     if (round == 1) {
       setLeader(playernumber);
     }
@@ -182,7 +178,8 @@ public:
             //set winner to next leader
       }
           //card a wins
-      else if (Card_less(b,a,ledcard,order_up_suit) == true && Card_less(c,a,ledcard,order_up_suit) == true) {
+      else if (Card_less(b,a,ledcard,order_up_suit) == true
+       && Card_less(c,a,ledcard,order_up_suit) == true) {
         //players i and i+2 get a score
         //pointIncrementer(playernumber);
         trickIncrementer(playernumber);
@@ -223,7 +220,8 @@ bool isTeam1(int playernum) {
 
 }
 bool team_1_wins() {
-  if ((isTeam1(playernumber) == true) && (Players[playernumber] == Players[leader]))  {
+  if ((isTeam1(playernumber) == true) && (Players[playernumber] 
+  == Players[leader]))  {
     return true;
 
   }
@@ -231,15 +229,12 @@ bool team_1_wins() {
     return false; 
   }
 }
-/*bool isMarch(){
-  if(trickteam1 || trickteam2 == 5) {
-    isMarch() == true; 
+void checkpointstowin(int points) {
+  if(points < 1 || points > 100) {
+    errorMessage();
   }
-  else {
-    isMarch() == false; 
-  }
+
 }
-*/
 void setLeader(int plyrnumber){
   int counter = 0; 
   if (round == 1) {
@@ -263,7 +258,7 @@ void setLeader(int plyrnumber){
 void printMarch(){
     cout << "march!" << endl;
  }
- void printeuchre(){
+void printeuchre(){
     cout << "euchred!" << endl;
  }
 void updateRound() {
@@ -278,12 +273,16 @@ bool is_dealer(){
       return false;
     }
   }
-    
+void errorMessage() {
+  cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+      << "NAME4 TYPE4" << endl;
+}
 //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES
     
-  void set_points_to_win(int number){
-    points_to_win = number;
-  }
+
+   
+  
     
   int get_team1_score() {
     return teamOneScore;
@@ -303,6 +302,14 @@ bool is_dealer(){
   }
 
 private:
+  string p1;
+  string p2; 
+  string p3;
+  string p4;
+  string p1t;
+  string p2t; 
+  string p3t;
+  string p4t;
   int upcardplayer;
   int playernumber = 0; 
   Card upcard;
@@ -316,10 +323,11 @@ private:
   Pack pack;
   int dealer;
   int hand;
-  int trickteam1; 
-  int trickteam2; 
+  int trickteam1 = 0; 
+  int trickteam2 = 0; 
   int leader; 
   string shuffle;
+  string peopleArray[9];
   int teamOneScore = 0;
   int teamTwoScore = 0;
   int points_to_win;
@@ -329,8 +337,8 @@ private:
 
 int main(int argc, char *argv[]) {
     bool game_over = false;
-    
     // sets players to input
+
     string player0name = argv[4];
     string player0type = argv[5];
     string player1name = argv[6];
@@ -341,25 +349,26 @@ int main(int argc, char *argv[]) {
     string player3type = argv[11];
     string shuffle = argv[2]; 
     int pointsnumber = atoi(argv[3]);
-    
+    string peoplelist[9] ={player0name,player0type,player1name,player1type,player2name,
+    player2type,player3name,player3type};
     // opens pack
+     Game g = Game(pointsnumber,peoplelist);
     ifstream is;
     is.open(argv[1]);
     if (!is.is_open()) {
         cout << "Error opening " << argv[1] << endl;
     }
     Pack p(is);
-    
-    Game g = Game();
-    
     // creates the players
-    g.set_players(player0name, player0type, player1name, player1type, player2name, player2type, player3name, player3type);
-    g.set_points_to_win(pointsnumber); 
+   
+    //g.set_players(player0name, player0type, player1name, player1type, 
+    //player2name, player2type, player3name, player3type);
+    //g.set_points_to_win(pointsnumber); 
   
-    if ((argv[5] || argv[7] || argv[9] || argv [11]) != ("Simple" || "Human")) {
-        g.errorMessage();
-        return 1;
-    }
+    //if ((argv[5] || argv[7] || argv[9] || argv [11]) != ("Simple" || "Human")) {
+      //  g.errorMessage();
+   //     return 1;
+    //}
     
     while (!game_over) {
         if (shuffle == "shuffle") {
