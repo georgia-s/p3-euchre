@@ -108,10 +108,12 @@ void trickIncrementer(int playernumber) {
     if(playernumber == 0 || playernumber == 2) {
       
       trickteam1++; 
+      cout << Players[playernumber]->get_name() <<" takes the trick" << endl; 
     }
     if(playernumber == 2 || playernumber == 3) {
      
       trickteam2++; 
+       cout << Players[playernumber]->get_name() <<" takes the trick" << endl; 
     }
 
 
