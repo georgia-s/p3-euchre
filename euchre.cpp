@@ -104,7 +104,7 @@ public:
        upcardplayer = count; 
        updateRound();
   }
-  void trickIncrementer(int playernumber) {
+void trickIncrementer(int playernumber) {
     if(playernumber == 0 || playernumber == 2) {
       
       trickteam1++; 
@@ -163,7 +163,7 @@ void play() {
       setLeader(playernumber);
     }
   //pass in a trump suit
-    while (teamOneScore + teamTwoScore >= points_to_win){
+    while (teamOneScore + teamTwoScore < points_to_win){
       Players[leader]->lead_card(order_up_suit);       
       Card a = Players[(leader + 1) % 4]->play_card(upcard,order_up_suit);
       Card b = Players[(leader + 2) % 4]->play_card(upcard,order_up_suit);
@@ -268,7 +268,7 @@ void printeuchre(){
     cout << "euchred!" << endl;
  }
 void updateRound() {
-  round = round + 1;
+  round++; 
   count = 0; 
 }
 bool is_dealer(){

@@ -36,16 +36,14 @@ public:
     //SIMPLE PLAYER MAKE TRUMP 
    bool make_trump(const Card &upcard, bool is_dealer,
                             int round, Suit &order_up_suit) const{
-        for (size_t i=0; i < simple_hand.size(); ++i) {
-            std::cout << "Simple player " << simple_name << "'s hand: "
-            << "[" << i << "] " << simple_hand[i] << "\n";
-        }
-        
+        //for (size_t i=0; i < simple_hand.size(); ++i) {
+           // std::cout << "Simple player " << simple_name << "'s hand: "
+           // << "[" << i << "] " << simple_hand[i] << "\n";
+        //} 
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
         int ace_or_face_same_as_other_color = 0;
-    
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
@@ -88,8 +86,9 @@ public:
             if (ace_or_face_same_as_trump_count >= 1) {
                 order_up_suit = trump_suit;
                 return true;
+
             } else if (ace_or_face_same_as_other_color >= 1) {
-                    order_up_suit = other_color;
+                order_up_suit = other_color;
                     return true;
             }
             else {
