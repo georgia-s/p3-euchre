@@ -483,7 +483,7 @@ TEST(test_simple_player_make_trump_ten) {
 }
 
 // round 2, not dealer, makes trump with right bower
-TEST(test_simple_player_make_trump_eleven) {
+TEST(test_simple_player_make_trump) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
     bob->add_card(Card(FOUR, DIAMONDS));
