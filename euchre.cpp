@@ -41,6 +41,7 @@ public:
       }
    }
   void deal(){
+    //cout << "Hand" << hand; 
     //deals three cards to player 0
     Players[0]->add_card(pack.deal_one());
     Players[0]->add_card(pack.deal_one());
@@ -70,7 +71,7 @@ public:
     Players[3]->add_card(pack.deal_one());
     Players[3]->add_card(pack.deal_one());
     Card upcard = pack.deal_one();
-    cout << "Hand " << hand << endl;
+   cout << "Hand " << hand << endl;
     cout << Players[dealer]->get_name() << " deals" << endl;
     cout << upcard << " turned up" << endl;
   }
@@ -229,12 +230,17 @@ bool team_1_wins() {
     return false; 
   }
 }
-void checkpointstowin(int points) {
+int checkpointstowin(int points) {
   if(points < 1 || points > 100) {
     errorMessage();
+    return 1; 
+  }
+  else {
+    return 0;
   }
 
 }
+
 void setLeader(int plyrnumber){
   int counter = 0; 
   if (round == 1) {
@@ -280,10 +286,6 @@ void errorMessage() {
 }
 //GETTER, RETURNS PRIVATE MEMBERS OF TEAM ONE AND TWO SCORES
     
-
-   
-  
-    
   int get_team1_score() {
     return teamOneScore;
   }
@@ -302,14 +304,6 @@ void errorMessage() {
   }
 
 private:
-  string p1;
-  string p2; 
-  string p3;
-  string p4;
-  string p1t;
-  string p2t; 
-  string p3t;
-  string p4t;
   int upcardplayer;
   int playernumber = 0; 
   Card upcard;
@@ -321,8 +315,8 @@ private:
   vector<Card*> Table;
   vector<Player*> Players;
   Pack pack;
-  int dealer;
-  int hand;
+  int dealer = 0;
+  int hand = 0;
   int trickteam1 = 0; 
   int trickteam2 = 0; 
   int leader; 
@@ -334,30 +328,28 @@ private:
   //int ptstowin = stoi(points_to_win);
 };
 
-
 int main(int argc, char *argv[]) {
-    bool game_over = false;
     // sets players to input
-
-    string player0name = argv[4];
-    string player0type = argv[5];
-    string player1name = argv[6];
-    string player1type = argv[7];
-    string player2name = argv[8];
-    string player2type = argv[9];
-    string player3name = argv[10];
-    string player3type = argv[11];
-    string shuffle = argv[2]; 
-    int pointsnumber = atoi(argv[3]);
-    string peoplelist[9] ={player0name,player0type,player1name,player1type,player2name,
+  ifstream is;
+  is.open(argv[1]);
+  if (!is.is_open()) {
+    cout << "Error opening " << argv[1] << endl;
+  }
+  string player0name = argv[4];
+  string player0type = argv[5];
+  string player1name = argv[6];
+  string player1type = argv[7];
+  string player2name = argv[8];
+  string player2type = argv[9];
+  string player3name = argv[10];
+  string player3type = argv[11];
+  string shuffle = argv[2]; 
+  int pointsnumber = atoi(argv[3]);
+  string peoplelist[8] ={player0name,player0type,player1name,player1type,player2name,
     player2type,player3name,player3type};
     // opens pack
-     Game g = Game(pointsnumber,peoplelist);
-    ifstream is;
-    is.open(argv[1]);
-    if (!is.is_open()) {
-        cout << "Error opening " << argv[1] << endl;
-    }
+  Game g = Game(pointsnumber,peoplelist);
+    
     Pack p(is);
     // creates the players
    
@@ -370,15 +362,18 @@ int main(int argc, char *argv[]) {
    //     return 1;
     //}
     
-    while (!game_over) {
-        if (shuffle == "shuffle") {
-            g.shufflePack();
-        }
+    
+  if (shuffle == "shuffle") {
+    g.shufflePack();
+  }
+
+  
+  
         g.deal();
         g.make_trump();
         g.play();
         
-    }
+    return 0; 
 }
 
 
