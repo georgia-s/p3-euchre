@@ -42,8 +42,18 @@ public:
    }
   void deal(){
     //cout << "Hand" << hand; 
-    //deals three cards to player 0
-    Players[0]->add_card(pack.deal_one());
+    //deals three cards to player 1
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    Players[1]->add_card(pack.deal_one());
+    //deals two cards to player 2
+    Players[2]->add_card(pack.deal_one());
+    Players[2]->add_card(pack.deal_one());
+    //deals three cards to player 3
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    Players[3]->add_card(pack.deal_one());
+    //deals two cards to player 0
     Players[0]->add_card(pack.deal_one());
     Players[0]->add_card(pack.deal_one());
     //deals two cards to player 1
@@ -56,21 +66,11 @@ public:
     //deals two cards to player 3
     Players[3]->add_card(pack.deal_one());
     Players[3]->add_card(pack.deal_one());
-    //deals two cards to player 0
+    //deals three cards to player 0
     Players[0]->add_card(pack.deal_one());
     Players[0]->add_card(pack.deal_one());
-    //deals three cards to player 1
-    Players[1]->add_card(pack.deal_one());
-    Players[1]->add_card(pack.deal_one());
-    Players[1]->add_card(pack.deal_one());
-    //deals two cards to player 2
-    Players[2]->add_card(pack.deal_one());
-    Players[2]->add_card(pack.deal_one());
-    //deals three cards to player 3
-    Players[3]->add_card(pack.deal_one());
-    Players[3]->add_card(pack.deal_one());
-    Players[3]->add_card(pack.deal_one());
-    Card upcard = pack.deal_one();
+    Players[0]->add_card(pack.deal_one());
+    upcard = pack.deal_one();
    cout << "Hand " << hand << endl;
     cout << Players[dealer]->get_name() << " deals" << endl;
     cout << upcard << " turned up" << endl;
@@ -92,28 +92,35 @@ public:
   void shufflePack () {
     pack.shuffle();
   }
-  void make_trump() {
-    bool trump_made = false;
-    while (trump_made == false && count < 4) {
-      trump_made = Players[count]->make_trump(upcard, is_dealer(),
-       round, order_up_suit);
-           if (trump_made == false) {
-               count++;
+    void make_trump() {
+        bool trump_made = false;
+        int index = 1;
+        int times = 0;
+           while (trump_made == false && times < 8) {
+               if (times == 4) {
+                   round = 2;
+               }
+               if (index == 4){
+                   index = 0;
+               }
+               trump_made = Players[index]->make_trump(upcard, is_dealer(), round, order_up_suit);
+               if (trump_made == false) {
+                   index++;
+                   times++;
+               }
            }
-       }
-       upcardplayer = count; 
-       updateRound();
-  }
+           updateRound();
+      }
+    
 void trickIncrementer(int playernumber) {
     if(playernumber == 0 || playernumber == 2) {
-      
       trickteam1++; 
       cout << Players[playernumber]->get_name() <<" takes the trick" << endl << endl;
     }
-    if(playernumber == 2 || playernumber == 3) {
+    if(playernumber == 1 || playernumber == 3) {
      
       trickteam2++; 
-       cout << Players[playernumber]->get_name() <<" takes the trick" << endl << endl; 
+       cout << Players[playernumber]->get_name() <<" takes the trick" << endl << endl;
     }
 
 
@@ -124,7 +131,7 @@ void pointIncrementer(int playernumber) {
       
       teamOneScore++; 
     }
-    if(playernumber == 2 || playernumber == 3) {
+    if(playernumber == 1 || playernumber == 3) {
      
       teamTwoScore++; 
     }
@@ -161,27 +168,43 @@ void scoring(int winner){
 
  }
 void play() {
-    if (round == 1) {
-      setLeader(playernumber);
-    }
+    setLeader(playernumber);
   //pass in a trump suit
     while (teamOneScore + teamTwoScore < points_to_win){
-      Players[leader]->lead_card(order_up_suit);       
-      Card a = Players[(leader + 1) % 4]->play_card(upcard,order_up_suit);
-      Card b = Players[(leader + 2) % 4]->play_card(upcard,order_up_suit);
-      Card c = Players[(leader + 3) % 4]->play_card(upcard,order_up_suit);
-      if (Card_less(a,b,ledcard,order_up_suit) == true && Card_less(c,b,ledcard,order_up_suit) == true) {
+        upcard = Players[leader]->lead_card(order_up_suit);
+        Card a = Players[(leader + 1) % 4]->play_card(upcard,order_up_suit);
+        Card b = Players[(leader + 2) % 4]->play_card(upcard,order_up_suit);
+        Card c = Players[(leader + 3) % 4]->play_card(upcard,order_up_suit);
+        if (Card_less(a,b,ledcard,order_up_suit) == true) {
+            if (Card_less(c,b,ledcard,order_up_suit) == true) {
+                playernumber = (leader + 2) % 4;
+            } else if (Card_less(c,b,ledcard,order_up_suit) == false) {
+                playernumber = (leader + 3) % 4;
+            }
+        } else if (Card_less(a,b,ledcard,order_up_suit) == false) {
+            if (Card_less(c,a,ledcard,order_up_suit) == true) {
+                playernumber = (leader + 1) % 4;
+            } else if (Card_less(c,a,ledcard,order_up_suit) == false) {
+                playernumber = (leader + 3) % 4;
+            }
+        }
+          
         trickIncrementer(playernumber);
-         setLeader(playernumber);
-         scoring(playernumber);
-         round++; 
+        setLeader(playernumber);
+        scoring(playernumber);
+        round++;
+    }
+    print_score();
+    print_win(points_to_win);
+}
         
         //Card b wins
             //Player b wins trick   
             //set winner to next leader
-      }
+      
           //card a wins
-      else if (Card_less(b,a,ledcard,order_up_suit) == true
+    
+        /*if (Card_less(b,a,ledcard,order_up_suit) == true
        && Card_less(c,a,ledcard,order_up_suit) == true) {
         //players i and i+2 get a score
         //pointIncrementer(playernumber);
@@ -200,8 +223,8 @@ void play() {
          round++; 
         //card c wins trick 
       }
-    }
-}
+    }*/
+
 //HELPER FUNCTIONS 
 bool team_one_ordered_up(int playernum){
   Players[upcardplayer];
@@ -266,9 +289,12 @@ void setLeader(int plyrnumber){
 void printMarch(){
     cout << "march!" << endl;
  }
-void printeuchre(){
-    cout << "euchred!" << endl;
- }
+
+    void printeuchre(){
+        cout << "euchred!" << endl;
+    }
+    
+
 void updateRound() {
   round++; 
   count = 0; 
@@ -307,7 +333,7 @@ void errorMessage() {
 
 private:
   int upcardplayer;
-  int playernumber = 0; 
+  int playernumber = 1;
   Card upcard;
   int dealernumber; 
   Card ledcard; 
