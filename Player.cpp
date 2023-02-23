@@ -276,7 +276,7 @@ public:
             }
             for (int i = 0; i < simple_hand.size(); i++) {
                 if (simple_hand[i] == min) {
-                    std::cout << min << " played by " << simple_name << std::endl;
+                    std::cout << min << " led by " << simple_name << std::endl;
                     simple_hand.erase (simple_hand.begin() + i);
                     return min;
                 }
