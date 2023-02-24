@@ -208,11 +208,11 @@ public:
     //EFFECTS Plays one Card from Player's hand
     //according to their strategy.
     //The card is removed from the player's hand.
-    Card play_card(const Card &led_card, Suit trump){
+      Card play_card(const Card &led_card, Suit trump){
         Card max = simple_hand[0];
         int count = 0;
         // makes sure that left bower isn't set to lowest
-        while(simple_hand[count].is_left_bower(led_card.get_suit())) {
+        while(simple_hand[count].is_left_bower(trump)) {
             count++;
         }
         Card min = simple_hand[count];
@@ -222,46 +222,65 @@ public:
             if (simple_hand[i].get_suit() == led_card.get_suit()) {
                 same_suit = true;
             }
-            if (simple_hand[i].is_left_bower(led_card.get_suit())) {
-                same_suit = true;
-            }
         }
-
+        
         bool right_bower_present = false;
         bool left_bower_present = false;
         
-        // can follow suit, so plays highest
+        // can follow suit, so plays highest of suit
         if (same_suit == true){
             for (int i = 0; i < simple_hand.size(); i++) {
-                if(simple_hand[i].is_right_bower(led_card.get_suit())) {
-                    max = simple_hand[i];
-                    right_bower_present = true;
-                }
-                if(simple_hand[i].is_left_bower(led_card.get_suit())
-                   && right_bower_present == false) {
-                    max = simple_hand[i];
-                    left_bower_present = true;
-                }
-                
-                if (simple_hand[i].get_suit() == led_card.get_suit()
-                    && simple_hand[i] > max && right_bower_present == false
-                    && left_bower_present == false) {
-                    max = simple_hand[i];
+                if (trump == led_card.get_suit()) {
+                    if(simple_hand[i].is_right_bower(trump)) {
+                                       max = simple_hand[i];
+                        right_bower_present = true;
+                    }
+                                
+                    if(simple_hand[i].is_left_bower(trump)
+                                      && right_bower_present == false) {
+                        max = simple_hand[i];
+                        left_bower_present = true;
+                    }
+                    if (simple_hand[i].get_suit() == led_card.get_suit()
+                    && simple_hand[i] > max && left_bower_present == false
+                        && right_bower_present == false) {
+                        max = simple_hand[i];
+                    }
+                    
+                } else {
+                    
+                    if (simple_hand[i].get_suit() == led_card.get_suit()
+                    && simple_hand[i] > max) {
+                        max = simple_hand[i];
+                    }
                 }
             }
-            std::cout << max << " played by " << simple_name << std::endl;
-            return max;
+            
+            for (int i = 0; i < simple_hand.size(); i++) {
+                if (simple_hand[i] == max) {
+                    std::cout << max << " played by " << simple_name << std::endl;
+                    simple_hand.erase (simple_hand.begin() + i);
+                    return max;
+                }
+            }
         }
         // cant follow suit, so plays lowest
         else {
             for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] < min && !simple_hand[i].is_left_bower(led_card.get_suit())) {
+                
+                if (simple_hand[i] < min && !simple_hand[i].is_left_bower(trump)) {
                     min = simple_hand[i];
                 }
             }
-            std::cout << min << " played by " << simple_name << std::endl;
-            return min;
+            for (int i = 0; i < simple_hand.size(); i++) {
+                if (simple_hand[i] == min) {
+                    std::cout << min << " played by " << simple_name << std::endl;
+                    simple_hand.erase (simple_hand.begin() + i);
+                    return min;
+                }
+            }
         }
+        return min;
     }
     
     private:

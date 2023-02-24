@@ -28,9 +28,9 @@ public:
   }
   void print_score() {
     cout << *Players[0] << " and " << *Players[2]
-      << " have " << teamOneScore << "points" << endl;
+      << " have " << teamOneScore << " points" << endl;
     cout << *Players[1] << " and " << *Players[3]
-        << " have " << teamTwoScore << "points" << endl;
+        << " have " << teamTwoScore << " points" << endl;
   }   
   void print_win(int set_points_to_win) {
       if (teamOneScore >= set_points_to_win) {
@@ -171,10 +171,12 @@ void play() {
     setLeader(playernumber);
   //pass in a trump suit
     while (teamOneScore + teamTwoScore < points_to_win){
-        upcard = Players[leader]->lead_card(order_up_suit);
-        Card a = Players[(leader + 1) % 4]->play_card(upcard,order_up_suit);
-        Card b = Players[(leader + 2) % 4]->play_card(upcard,order_up_suit);
-        Card c = Players[(leader + 3) % 4]->play_card(upcard,order_up_suit);
+        ledcard = Players[leader]->lead_card(order_up_suit);
+        Card a = Players[(leader + 1) % 4]->play_card(ledcard,order_up_suit);
+        Card b = Players[(leader + 2) % 4]->play_card(ledcard,order_up_suit);
+        Card c = Players[(leader + 3) % 4]->play_card(ledcard,order_up_suit);
+        
+        
         if (Card_less(a,b,ledcard,order_up_suit) == true) {
             if (Card_less(c,b,ledcard,order_up_suit) == true) {
                 playernumber = (leader + 2) % 4;

@@ -108,17 +108,17 @@ TEST(test_simple_player_play_card_five) {
       bob->add_card(Card(QUEEN, HEARTS));
       bob->add_card(Card(QUEEN, DIAMONDS));
       bob->add_card(Card(KING, HEARTS));
-      bob->add_card(Card(ACE, DIAMONDS));
+      bob->add_card(Card(NINE, DIAMONDS));
 
       // Bob plays a card
       Card nine_clubs(NINE, CLUBS);
       Card card_played = bob->play_card(
         nine_clubs,  // seven of clubs is led
-        CLUBS       // Trump suit
+        DIAMONDS       // Trump suit
       );
 
       // Verify the card Bob played
-      ASSERT_EQUAL(card_played, Card(JACK, SPADES));
+      ASSERT_EQUAL(card_played, Card(NINE, DIAMONDS));
       delete bob;
     }
 
@@ -654,6 +654,7 @@ TEST(test_simple_player_lead_card_six) {
 
 // all trump cards so play highest trump
 // left and right bowers present
+//play right bower
 TEST(test_simple_player_lead_card_seven) {
     // Bob's hand
     Player * bob = Player_factory("Bob", "Simple");
