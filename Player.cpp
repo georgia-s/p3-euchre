@@ -1,4 +1,4 @@
-/// Project UID 1d9f47bfc76643019cfbf037641defe1
+// Project UID 1d9f47bfc76643019cfbf037641defe1
 //  Player.cpp
 //  p3-euchre
 //
@@ -11,7 +11,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cassert>
-#include <vector>
+#include <iostream>
+
 using namespace std;
 
 class SimplePlayer : public Player {
@@ -36,75 +37,44 @@ public:
     //SIMPLE PLAYER MAKE TRUMP 
    bool make_trump(const Card &upcard, bool is_dealer,
                             int round, Suit &order_up_suit) const{
-        //for (size_t i=0; i < simple_hand.size(); ++i) {
-           // std::cout << "Simple player " << simple_name << "'s hand: "
-           // << "[" << i << "] " << simple_hand[i] << "\n";
-        //} 
         Suit trump_suit = upcard.get_suit();
         Suit other_color = Suit_next(trump_suit);
         int ace_or_face_same_as_trump_count = 0;
         if (round == 1) {
             for (size_t i=0; i < simple_hand.size(); ++i) {
                 if (simple_hand[i].get_suit() == trump_suit
-                && simple_hand[i].is_face_or_ace()) {
+                    && simple_hand[i].is_face_or_ace()) {
+                    ace_or_face_same_as_trump_count++;
+                } if (simple_hand[i].is_left_bower(trump_suit)) {
                     ace_or_face_same_as_trump_count++;
                 }
-                if (simple_hand[i].is_left_bower(trump_suit)) {
-                    ace_or_face_same_as_trump_count++;
-                }
-            }
-                    
-            if (ace_or_face_same_as_trump_count >= 2) {
-                order_up_suit = trump_suit;
-                std::cout << simple_name << " orders up "
-                << order_up_suit << std::endl << std::endl;
+            } if (ace_or_face_same_as_trump_count >= 2) {
+              order_up_suit = trump_suit;
                 return true;
-            }
-            else {
-                std::cout << simple_name << " passes" << std::endl;
+            } else {
                 return false;
             }
-        }
-
-        if (round == 2) {
-            
+        } if (round == 2) {
             if (is_dealer == true) {
                 order_up_suit = other_color;
-                std::cout << simple_name << " orders up "
-                << order_up_suit << std::endl << std::endl;
                 return true;
             }
-            
             for (size_t i=0; i < simple_hand.size(); ++i) {
-                if (simple_hand[i].get_suit() == trump_suit
-                     && simple_hand[i].is_face_or_ace()) {
-                    ace_or_face_same_as_trump_count++;
-                }
                 if (simple_hand[i].get_suit() == other_color
                      && simple_hand[i].is_left_bower(trump_suit)) {
                     ace_or_face_same_as_trump_count++;
-                }
-                if (simple_hand[i].get_suit() == other_color
-                    && simple_hand[i].is_face_or_ace() && !simple_hand[i].is_left_bower(trump_suit)) {
+                } if (simple_hand[i].get_suit() == other_color
+                    && simple_hand[i].is_face_or_ace()
+                    && !simple_hand[i].is_left_bower(trump_suit)) {
                     ace_or_face_same_as_trump_count++;
                 }
-            }
-            if (ace_or_face_same_as_trump_count >= 1) {
+            } if (ace_or_face_same_as_trump_count >= 1) {
                 order_up_suit = other_color;
-                std::cout << simple_name << " orders up "
-                << order_up_suit << std::endl << std::endl;
                 return true;
-
-            }
-            
-            else {
-                std::cout << simple_name << " passes" << std::endl;
+            } else {
                 return false;
             }
-            
-        }
-       std::cout << simple_name << " passes" << std::endl;
-       return false;
+        } return false;
     }
     
     void add_and_discard(const Card &upcard) {
@@ -119,7 +89,6 @@ public:
             }
         }
         simple_hand.erase(simple_hand.begin() + lowest);
-        add_card(upcard);
     }
     
     
@@ -130,157 +99,292 @@ public:
     //The card is removed the player's hand.
      Card lead_card(Suit trump) {
         Card max = simple_hand[0];
-        int start = 0;
-
-         // sees how many trump cards there are before reaching
-         // a non trump card
-        while ((simple_hand[start].get_suit() == trump || simple_hand[start].is_left_bower(trump)) && start != simple_hand.size()) {
-            start++;
+         int start = 0;
+         bool done = false;
+        // num trump cards  before non trump
+         while (done == false) {
+             if ((simple_hand[start].get_suit() == trump
+                 || simple_hand[start].is_left_bower(trump)) && done == false) {
+                 start++;
+             } else {
+                 done = true;
+             }
+             if (start == simple_hand.size()) {
+                 done = true;
+             }
         }
-        
          // if there is a mix of trump and non trump cards
          // sets max equal to first non trump card
-        if (start != 0 && start != simple_hand.size()) {
+        if (start != 0 && start != (simple_hand.size())) {
             max = simple_hand[start];
         }
-        
-        bool right_bower_present = false;
-        bool left_bower_present = false;
-        
-        Card right_bower;
-        Card left_bower;
-        
-         //finds out of there is a left and/or right bower present
-        for (int i = 0; i < simple_hand.size(); i++) {
-            if (simple_hand[i].is_left_bower(trump)) {
-                left_bower_present = true;
-                left_bower = simple_hand[i];
-            }
-            if (simple_hand[i].is_right_bower(trump)) {
-                right_bower_present = true;
-                right_bower = simple_hand[i];
-            }
-        }
-        
-        //counts total trump cards
-        int trump_count = 0;
+        int trump_count = 0; //counts total trump cards
         for (int i = 0; i < simple_hand.size(); i++) {
             if (simple_hand[i].get_suit() == trump
                 || simple_hand[i].is_left_bower(trump)) {
                 trump_count++;
             }
         }
-         
-        // if not all trump cards
-        // max is greatest of non trump cards
-        // excludes left bower bc its cosidered trump card
-        if (trump_count < simple_hand.size()) {
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if ((simple_hand[i] > max) && (!simple_hand[i].is_left_bower(trump))
-                    && (simple_hand[i].get_suit() != trump)) {
-                    max = simple_hand[i];
-                }
+         // if not all trump cards
+         // max is greatest of non trump cards
+         // excludes left bower bc its cosidered trump card
+         if (trump_count < simple_hand.size()) {
+             for (int i = 0; i < simple_hand.size(); i++) {
+                 max = trump_count_less_test(max, trump);
+             }
+         }
+         // if all trump cards, play highest trump
+          // right bower is highest, then left
+         if (trump_count >= simple_hand.size()) {
+             max = trump_count_equal_test(max, trump, start);
+         }
+         for (int i = 0; i < simple_hand.size(); i++) {
+             if (simple_hand[i] == max) {
+                 simple_hand.erase (simple_hand.begin() + i);
+             }
+         }
+         return max;
+    }
+    
+    
+    Card trump_count_less_test(Card max, Suit trump) {
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if ((Card_less(max, simple_hand[i], trump))
+                && (!simple_hand[i].is_left_bower(trump))
+                && (simple_hand[i].get_suit() != trump)) {
+                max = simple_hand[i];
             }
         }
-        // if all trump cards, play highest trump
-         // right bower is highest, then left 
-        if (trump_count >= simple_hand.size()) {
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if (right_bower_present == true) {
-                    max = right_bower;
-                }
-                if (left_bower_present == true && right_bower_present == false) {
-                    max = left_bower;
-                }
-                if(((start == simple_hand.size()))
-                   && (simple_hand[i] > max) && (right_bower_present == false)
-                   && (left_bower_present == false)) {
-                    max = simple_hand[i];
-                }
-                
-            }
-        }
-        std::cout << max << " led by " << simple_name << std::endl;
         return max;
     }
+    
+    Card trump_count_equal_test(Card max, Suit trump, int start) {
+        //finds out of there is a left and/or right bower present
+        Card right_bower;
+        Card left_bower;
+        bool right_bower_present = false;
+        bool left_bower_present = false;
+        
+        for (int i = 0; i < simple_hand.size(); i++) {
+           if (simple_hand[i].is_left_bower(trump)) {
+               left_bower_present = true;
+               left_bower = simple_hand[i];
+           }
+           if (simple_hand[i].is_right_bower(trump)) {
+               right_bower_present = true;
+               right_bower = simple_hand[i];
+           }
+       }
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (right_bower_present == true) {
+                max = right_bower;
+            }
+            if (left_bower_present == true && right_bower_present == false) {
+                max = left_bower;
+            }
+            if(((start == simple_hand.size()))
+               && (Card_less(max, simple_hand[i], trump))
+               && (right_bower_present == false)
+               && (left_bower_present == false)) {
+                max = simple_hand[i];
+            }
+        }
+        return max;
+    }
+
+    
     
     //REQUIRES Player has at least one card
     //EFFECTS Plays one Card from Player's hand
     //according to their strategy.
     //The card is removed from the player's hand.
-      Card play_card(const Card &led_card, Suit trump){
-        Card max = simple_hand[0];
-        int count = 0;
-        // makes sure that left bower isn't set to lowest
-        while(simple_hand[count].is_left_bower(trump)) {
-            count++;
+    Card play_card(const Card &led_card, Suit trump){
+        Suit ledcard_suit = led_card.get_suit();
+        if (led_card.is_left_bower(trump)) {
+            ledcard_suit = trump;
         }
-        Card min = simple_hand[count];
-
+        Card played = simple_hand[0], max = simple_hand[0], min = simple_hand[0];
+        int count = 0; // dont set lowest to leftbower or trump
+        bool done = false;
+       // num trump cards  before non trump
+        while (done == false) {
+            if ((simple_hand[count].get_suit() == trump
+                || simple_hand[count].is_left_bower(trump)) && done == false) {
+                count++;
+            } else {
+                done = true;
+            }
+            if (count == simple_hand.size()) {
+                done = true;
+            }
+       }
+        
+        // if all trump suit, make sure not set to left/right bower
+        if (count == simple_hand.size()) {
+            count = 0;
+            done = false;
+            
+            while (done == false) {
+                if ((simple_hand[count].is_left_bower(trump)
+                    || simple_hand[count].is_right_bower(trump))
+                    && done == false) {
+                    count++;
+                } else {
+                    done = true;
+                }
+                if (count == simple_hand.size()) {
+                    done = true;
+                }
+           }
+            
+            if (count < simple_hand.size()) { //if one bower found
+                min = simple_hand[count];
+            } else {
+                min  = simple_hand[0];
+            }
+        } else {
+            min = simple_hand[count];
+        }
         bool same_suit = false;
+        same_suit = find_out_if_same_suit(led_card, ledcard_suit,
+                                          same_suit, trump);
+        if (same_suit == true) {  // can follow suit, plays highest
+            max = same_suit_testing(max, trump, led_card, ledcard_suit);
+            played = erase_card(max, played);
+        }
+        else { // cant follow suit, so plays lowest
+            min = play_lowest_testing(min, trump);
+            played = erase_card(min, played);
+        }
+        return played;
+    }
+    
+    Card erase_card(Card junk, Card played) {
         for (int i = 0; i < simple_hand.size(); i++) {
-            if (simple_hand[i].get_suit() == led_card.get_suit()) {
+            if (simple_hand[i] == junk) {
+                played = junk;
+                simple_hand.erase (simple_hand.begin() + i);
+                return played;
+            }
+        }
+        return played;
+    }
+    
+    bool find_out_if_same_suit(Card led_card, Suit ledcard_suit,
+                               bool same_suit, Suit trump) {
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (simple_hand[i].get_suit() == ledcard_suit
+                && !simple_hand[i].is_left_bower(trump)) {
+                same_suit = true;
+            }
+            if (ledcard_suit == trump
+                && simple_hand[i].is_left_bower(trump)) {
+                same_suit = true;
+            }
+            if (led_card.is_left_bower(trump)
+                && simple_hand[i].get_suit() == trump) {
                 same_suit = true;
             }
         }
-        
-        bool right_bower_present = false;
-        bool left_bower_present = false;
-        
-        // can follow suit, so plays highest of suit
-        if (same_suit == true){
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if (trump == led_card.get_suit()) {
-                    if(simple_hand[i].is_right_bower(trump)) {
-                                       max = simple_hand[i];
-                        right_bower_present = true;
-                    }
-                                
-                    if(simple_hand[i].is_left_bower(trump)
-                                      && right_bower_present == false) {
-                        max = simple_hand[i];
-                        left_bower_present = true;
-                    }
-                    if (simple_hand[i].get_suit() == led_card.get_suit()
-                    && simple_hand[i] > max && left_bower_present == false
-                        && right_bower_present == false) {
-                        max = simple_hand[i];
-                    }
-                    
-                } else {
-                    
-                    if (simple_hand[i].get_suit() == led_card.get_suit()
-                    && simple_hand[i] > max) {
-                        max = simple_hand[i];
-                    }
-                }
-            }
-            
-            for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] == max) {
-                    std::cout << max << " played by " << simple_name << std::endl;
-                    simple_hand.erase (simple_hand.begin() + i);
-                    return max;
-                }
+        return same_suit;
+    }
+    
+    
+    Card play_lowest_testing(Card min, Suit trump) {
+        int trump_suit_count = 0;
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (simple_hand[i].get_suit() == trump
+                || simple_hand[i].is_left_bower(trump) == true) {
+                trump_suit_count++;
             }
         }
-        // cant follow suit, so plays lowest
-        else {
-            for (int i = 0; i < simple_hand.size(); i++) {
-                
-                if (simple_hand[i] < min && !simple_hand[i].is_left_bower(trump)) {
-                    min = simple_hand[i];
-                }
+        // all non led suit cards are trump suit cards
+        if (trump_suit_count >= simple_hand.size()) {
+            min = trump_suit_count_equal(min, trump);
+
+        }
+        else if (trump_suit_count < simple_hand.size()) {
+            min = trump_suit_count_less(min, trump);
+        }
+        return min;
+    }
+    
+    Card trump_suit_count_equal(Card min, Suit trump){
+        bool notReached = true;
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (simple_hand[i] <= min && !simple_hand[i].is_left_bower(trump)
+                && !simple_hand[i].is_right_bower(trump)) {
+                min = simple_hand[i];
+                notReached = false;
             }
+        }
+        if (notReached == true){
             for (int i = 0; i < simple_hand.size(); i++) {
-                if (simple_hand[i] == min) {
-                    std::cout << min << " played by " << simple_name << std::endl;
-                    simple_hand.erase (simple_hand.begin() + i);
-                    return min;
+                if (simple_hand[i].is_left_bower(trump)) {
+                    min = simple_hand[i];
+                } else if (simple_hand[i].is_right_bower(trump)) {
+                    min = simple_hand[i];
                 }
             }
         }
         return min;
+    }
+    
+    Card trump_suit_count_less(Card min, Suit trump){
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (simple_hand[i].get_rank() < min.get_rank()
+                && !simple_hand[i].is_left_bower(trump)
+                && simple_hand[i].get_suit() != trump) {
+                min = simple_hand[i];
+            } else if (simple_hand[i].get_rank() == min.get_rank()
+                       && simple_hand[i].get_suit() < min.get_suit()
+                       && !simple_hand[i].is_left_bower(trump)
+                       && simple_hand[i].get_suit() != trump) {
+                min = simple_hand[i];
+            }
+        }
+        return min;
+    }
+        
+    
+    
+    Card same_suit_testing(Card max, Suit trump, Card led_card,
+                           Suit ledcard_suit) {
+        bool right_bower_present = false;
+        bool left_bower_present = false;
+        int count2 = 0;
+        while (simple_hand[count2].get_suit() != ledcard_suit
+               && !simple_hand[count2].is_left_bower(trump)) {
+            count2++;
+        }
+        max = simple_hand[count2];
+        for (int i = 0; i < simple_hand.size(); i++) {
+            if (ledcard_suit == trump) {
+                if (simple_hand[i].is_right_bower(trump)) {
+                    max = simple_hand[i];
+                    right_bower_present = true;
+                }
+                if (simple_hand[i].is_left_bower(trump)
+                                  && right_bower_present == false) {
+                    max = simple_hand[i];
+                    left_bower_present = true;
+                }
+                if (simple_hand[i].get_suit() == ledcard_suit
+                && simple_hand[i] > max && left_bower_present == false
+                    && right_bower_present == false) {
+                    max = simple_hand[i];
+                }
+                
+            } else if (led_card.is_left_bower(trump)
+                     && simple_hand[i].get_suit() == trump) {
+                max = simple_hand[i];
+            } else if (simple_hand[i].get_suit() == ledcard_suit
+                && simple_hand[i] > max
+                && !simple_hand[i].is_left_bower(trump)) {
+                    max = simple_hand[i];
+            }
+        }
+        return max;
     }
     
     private:
@@ -297,12 +401,33 @@ public:
         return human_name;
     }
     void add_card(const Card &c){
-        if (human_hand.size() < MAX_HAND_SIZE) {
+        if (human_hand.size() <= MAX_HAND_SIZE) {
             human_hand.push_back(c);
         }
         std::sort(human_hand.begin(), human_hand.end());
     }
    
+    
+    void add_and_discard(const Card &upcard) {
+        for (size_t i=0; i < human_hand.size(); ++i) {
+            std::cout << "Human player " << human_name << "'s hand: "
+                 << "[" << i << "] " << human_hand[i] << "\n";
+        }
+        std::cout << "Discard upcard: [-1]" << std::endl;
+        
+        
+        std::cout << "Human player " << human_name
+        << ", please select a card to discard:" << std::endl << std::endl;
+
+        int index;
+        std::cin >> index;
+        
+        if (index != -1) {
+            human_hand.erase(human_hand.begin() + index);
+            add_card(upcard);
+        }
+    }
+    
     // need to make specific to human
     //EFFECTS If Player wishes to order
     //up a trump suit then return true and
@@ -323,30 +448,13 @@ public:
         
         if (decision != "pass") {
             order_up_suit = string_to_suit(decision);
-            std::cout << human_name << " orders up "
-            << order_up_suit << std::endl << std::endl;
             return true;
         }
         else {
-            std::cout << human_name << " passes" << std::endl;
             return false;
         }
     }
     
-    void add_and_discard(const Card &upcard) {
-        Suit trump = upcard.get_suit();
-        int lowest = 0;
-        Card min = human_hand[0];
-        human_hand.push_back(upcard);
-        for(size_t i = 0; i < human_hand.size(); i++){
-            if(Card_less(human_hand[i], min, trump)){
-                min = human_hand[i];
-                lowest = (int)i;
-            }
-        }
-        human_hand.erase(human_hand.begin() + lowest);
-        add_card(upcard);
-    }
     
     
     Card lead_card(Suit trump) {
@@ -356,12 +464,11 @@ public:
         }
         std::cout << "Human player " << human_name
                   << ", please select a card:\n";
-        Rank rank;
-        std::string junk;
-        Suit suit;
-        std::cin >> rank >> junk >> suit;
-        Card decision(rank, suit);
-        std::cout << decision << " led by " << human_name << std::endl;
+
+        int index;
+        std::cin >> index;
+        Card decision = human_hand[index];
+        human_hand.erase (human_hand.begin() + index);
         return decision;
     }
 
@@ -372,12 +479,11 @@ public:
         }
         std::cout << "Human player " << human_name
                   << ", please select a card:\n";
-        Rank rank;
-        std::string junk;
-        Suit suit;
-        std::cin >> rank >> junk >> suit;
-        Card decision(rank, suit);
-        std::cout << decision << " played by " << human_name << std::endl;
+        
+        int index;
+        std::cin >> index;
+        Card decision = human_hand[index];
+        human_hand.erase (human_hand.begin() + index);
         return decision;
     }
     
